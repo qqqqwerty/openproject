@@ -103,7 +103,7 @@ module API
 
         link :schema do
           href = if represented.project
-                   api_v3_paths.query_project_schema(represented.project.id)
+                   api_v3_paths.query_project_schema(represented.project.identifier)
                  else
                    api_v3_paths.query_schema
                  end
@@ -112,6 +112,21 @@ module API
           }
         end
 
+<<<<<<< HEAD
+=======
+        link :update do
+          href = if represented.project
+                   api_v3_paths.query_project_form(represented.project.identifier)
+                 else
+                   api_v3_paths.query_form
+                 end
+          {
+            href: href,
+            method: :post
+          }
+        end
+
+>>>>>>> 596a95ee9f... stub project specific form
         linked_property :user
         linked_property :project
 
