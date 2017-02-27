@@ -112,8 +112,6 @@ module API
           }
         end
 
-<<<<<<< HEAD
-=======
         link :update do
           href = if represented.project
                    api_v3_paths.query_project_form(represented.project.identifier)
@@ -126,7 +124,6 @@ module API
           }
         end
 
->>>>>>> 596a95ee9f... stub project specific form
         linked_property :user
         linked_property :project
 
