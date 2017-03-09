@@ -22,7 +22,7 @@ export class EditingRowBuilder extends SingleRowBuilder {
 
     // Iterate all columns, reattaching or rendering new columns
     this.columns.forEach((column:QueryColumn) => {
-      let oldTd = tds.filter(`td.${column}`);
+      let oldTd = tds.filter(`td.${column.id}`);
 
       // Reattach the column if its currently being edited
       if (editForm.activeFields[column.id] && oldTd.length) {
