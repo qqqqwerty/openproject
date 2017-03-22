@@ -4,7 +4,7 @@ We are pleased that you are thinking about contributing to OpenProject! This gui
 
 Please get in touch with us using our [develompment forum](https://community.openproject.com/projects/openproject/boards/7) or send us an email to info@openproject.org.
 
-### Contributor Code of Conduct
+### Contributor code of conduct
 
 As contributors and maintainers of this project, we pledge to respect all people
 who contribute through reporting issues, posting feature requests,
@@ -25,7 +25,7 @@ Project maintainers who do not follow the Code of Conduct may be removed from th
 Instances of abusive, harassing, or otherwise unacceptable behavior may be reported
 by opening an issue or contacting one or more of the project maintainers.
 
-This Code of Conduct is adapted from the
+This code of conduct is adapted from the
 [Contributor Covenant](http:contributor-covenant.org),
 version 1.0.0, available at
 [http://contributor-covenant.org/version/1/0/0/](http://contributor-covenant.org/version/1/0/0/)
@@ -35,10 +35,10 @@ version 1.0.0, available at
 
 We use OpenProject for development coordination and roadmap planning. Please have a look at the following lists:
 
-- [development timeline](https://community.openproject.com/projects/openproject/timelines/36)
-- [product roadmap and release planning](https://community.openproject.com/projects/openproject/roadmap)
-- [wish list](https://community.openproject.com/versions/26)
-- [bug backlog](https://community.openproject.com/versions/136)
+- [Development timeline](https://community.openproject.com/projects/openproject/timelines/36)
+- [Product roadmap and release planning](https://community.openproject.com/projects/openproject/roadmap)
+- [Wish list](https://community.openproject.com/versions/26)
+- [Bug backlog](https://community.openproject.com/versions/136)
 
 ### Branching model
 
@@ -132,8 +132,18 @@ We want to keep the Pull request list as cleaned up as possible - we will aim cl
 after an **inactivity period of 30 days** (no comments, no further pushes)
 which are not labelled as `work in progress` by us.
 
-## Contributors License Agreement
+## Contributors license agreement
 
 Contributors have to sign a CLA before contributing to OpenProject.
 The [CLA can be found here](https://www.openproject.org/wp-content/uploads/2015/08/Contributor-License-Agreement.pdf)
 and has to be filled out and sent to info@openproject.org.
+
+## Security
+
+If you notice a security issue in OpenProject, please send us a gpg encrypted email to security@openproject.org and describe the issue you found. Download our public gpg key [here](https://pgp.mit.edu/pks/lookup?op=get&search=0x7D669C6D47533958).
+
+Please include a description on how to reproduce the issue if possible. Our security team will get your email and will attempt to reproduce and fix the issue as soon as possible.
+
+## Accessibility
+
+For our impaired users please have a look at our [accessibility-checklist](https://www.openproject.org/help/develope-openproject/accessibility-checklist).
