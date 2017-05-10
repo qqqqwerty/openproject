@@ -1,4 +1,4 @@
-# System Requirements
+# System requirements
 
 __Note__: The configurations described below are what we use and test against.
 This means that other configurations might also work but we do not
@@ -8,10 +8,10 @@ provide any official support for them.
 
 ### Hardware
 
-* __Memory:__ 512 MB (1024 recommended)
-* __Free disc space:__ 300 MB (4096 recommended)
+* __Memory:__ 768 MB (1GB recommended)
+* __Free disk space:__ at least 400 MB (1GB recommended)
 
-### Operating System
+### Operating system
 
 | Distribution (64 bits only)     | Identifier   | init system |
 | :------------------------------ | :----------- | :---------- |

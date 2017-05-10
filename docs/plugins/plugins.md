@@ -1,20 +1,20 @@
 # Plugins
 
-## Install Plugins
+## Install plugins
 You can install plugins for the following installation methods:
 
-* [Install Plugins (Packages)](https://www.openproject.org/help/plugins/install-plugins-packages/)
-* [Install Plugins (Manual)](https://www.openproject.org/help/plugins/install-plugins-manual/)
+* [Install plugins - packaged installation](https://www.openproject.org/plugins/install-plugins-packaged/)
+* [Install plugins - manual installation](https://www.openproject.org/plugins/install-plugins-manual/)
 
-## Contribute Plugins
+## Develop plugins
 
-We encourage you to extend OpenProject yourself by writing a plugin. Please, read the [plugin-contributions](https://www.openproject.org/help/develope-openproject/create-openproject-plugin/) guide for more information.
+We encourage you to extend OpenProject yourself by writing a plugin. Please, read the [plugin-contributions](https://www.openproject.org/develope-openproject/create-openproject-plugin/) guide for more information.
 
 If you are a plugin author and want your plugins to be listed here, leave us a note in our [forums](https://community.openproject.org/projects/openproject/boards), via [twitter](https://twitter.com/openproject) or any other communication channel. We're looking forward to your contribution.
 
 Please note that the plugin author is responsible to keep his plugin up to date with OpenProject development. In case a plugin causes errors, please contact the plugin author and/or write in our support forums. We will remove plugins from this page if we notice that they are not maintained.
 
-## Supported Plugins
+## Supported plugins
 Supported plugins are compatible with the current OpenProject version. When a plugin has a dependency to another plugin it is necessary that you list both plugins in the Gemfile.plugins.
 
 ### Backlogs
@@ -22,10 +22,10 @@ Supported plugins are compatible with the current OpenProject version. When a pl
 * Author: [OpenProject GmbH](https://www.openproject.org/about-us/)
 * Link: [Source](https://github.com/finnlabs/openproject-backlogs)
 * Dependency: PDF Export
-* Please refer also to the [agile and scrum overview](https://www.openproject.org/collaboration-software-features/) page
+* Please refer also to the [agile and scrum overview](https://www.openproject.org/collaboration-software-features/#agile-scrum/) page
 
 ```
-gem "openproject-backlogs", git: "https://github.com/finnlabs/openproject-backlogs.git", :branch => 'stable/5' 
+gem "openproject-backlogs", git: "https://github.com/finnlabs/openproject-backlogs.git", :branch => 'stable/5'
 gem "openproject-pdf_export", git: "https://github.com/finnlabs/openproject-pdf_export.git", :branch => 'stable/5'
 ```
 
@@ -142,7 +142,7 @@ gem 'openproject-reporting', git: 'https://github.com/finnlabs/openproject-repor
 gem 'openproject-xls_export', git: 'https://github.com/finnlabs/openproject-xls_export.git', :branch => 'stable/5'
 ```
 
-## Community Plugins
+## Community plugins
 
 There are several plugins developed by dedicated community members. We really appreciate their hard work!
 

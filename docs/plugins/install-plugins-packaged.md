@@ -1,6 +1,7 @@
-### Installing plugins
+# Install plugins - packaged installation
 
-Note: this guide only applies if you've installed OpenProject using our DEB/RPM packages.
+Note: this guide only applies if you've installed OpenProject using our DEB/RPM
+packages.
 
 [A number of plugins](https://www.openproject.org/plugins/) exist
 for use with OpenProject. Most plugins that are maintained by us are shipping
@@ -15,7 +16,7 @@ third party plugins.
 do we provide support for them. Please carefully check whether the plugins you
 use are available in newer versions before upgrading your installation.
 
-#### 1. Add a custom Gemfile
+## 1. Add a custom Gemfile
 
 If you have a plugin you wish to add to your packaged OpenProject installation,
 create a separate Gemfile with the Gem dependencies, such as the following:
@@ -28,7 +29,7 @@ We suggest to store the Gemfile under `/etc/openproject/Gemfile.custom`, but
 the choice is up to you, just make sure the `openproject` user is able to read
 it.
 
-#### 2. Propagate the Gemfile to the package
+## 2. Propagate the Gemfile to the package
 
 You have to tell your installation to use the custom gemfile via a config setting:
 
@@ -36,7 +37,7 @@ You have to tell your installation to use the custom gemfile via a config settin
 openproject config:set CUSTOM_PLUGIN_GEMFILE=/etc/openproject/Gemfile.custom
 ```
 
-#### 3. Re-run the installer
+## 3. Re-run the installer
 
 To re-bundle the application including the new plugins, as well as running
 migrations and precompiling their assets, simply re-run the installer while

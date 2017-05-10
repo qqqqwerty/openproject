@@ -1,4 +1,4 @@
-# Incoming Mail Functionality
+# Incoming mail functionality
 
 OpenProject is able to receive emails and create and update work packages and reply in forums depending on the content of the email.
 
@@ -9,7 +9,14 @@ Receiving emails is done via a rake task that fetches emails from an email serve
 ### IMAP
 
 The rake task `redmine:email:receive_imap` fetches emails via IMAP and parses them.
-Example:
+
+**Packaged installation**
+
+```bash
+openproject run bundle exec rake redmine:email:receive_imap host='imap.gmail.com' username='test_user' password='password' port=993 ssl=true allow_override=type,project project=test_project
+```
+
+**Manual installation**
 
 ```bash
 bundle exec rake redmine:email:receive_imap host='imap.gmail.com' username='test_user' password='password' port=993 ssl=true allow_override=type,project project=test_project
@@ -42,7 +49,14 @@ Available arguments that change how the work packages are handled:
 ### POP3
 
 The rake task `redmine:email:receive_pop3` fetches emails via IMAP and parses them.
-Example:
+**Packaged installation**
+
+```bash
+openproject run bundle exec rake redmine:email:receive_imap host='imap.gmail.com' username='test_user' password='password' port=993 ssl=true allow_override=type,project project=test_project
+```
+
+**Manual installation**
+
 ```bash
 bundle exec rake redmine:email:receive_pop3 host='pop.gmail.com' username='test_user' password='password' port=995 allow_override=priority
 ```
@@ -73,9 +87,9 @@ If you set a default value it will be used when creating a work package.
 But then no other value is possible (even when you update the work package) unless you specify this with the use of `allow_override`. Some attributes (like `type, status, priority`) are only changeable if you specify this via `allow_override`. But notice: Some attributes have to specified in another format here, e.g. Assignee can be allowed to be overriden with `allow_override=assigned_to`.
 
 
-## Format of the Emails
+## Format of the emails
 
-### Work Packages
+### Work packages
 
 #### Sending user address
 
@@ -127,4 +141,4 @@ If you create a work package via email and sent it to another email (to or bcc) 
 
 ### Truncate Emails
 
-In the administator's setting you can specify lines after which an email will not be parsed anymore. That is useful if you want to reply to an email automatically sent to you from OpenProject. E.g. you could set it to `--Truncate here--` and insert this line into your email below the updates you want to perform. 
+In the administator's setting you can specify lines after which an email will not be parsed anymore. That is useful if you want to reply to an email automatically sent to you from OpenProject. E.g. you could set it to `--Truncate here--` and insert this line into your email below the updates you want to perform.

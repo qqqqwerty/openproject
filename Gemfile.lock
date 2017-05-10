@@ -60,7 +60,7 @@ GIT
 
 GIT
   remote: https://github.com/opf/openproject-translations.git
-  revision: 23cbcef3adc05f9f260fad3e461f04f0712e3ad3
+  revision: ec435bd336109cdc8318354d4304bee37775ab3b
   branch: release/6.1
   specs:
     openproject-translations (6.1.6)
@@ -251,7 +251,7 @@ GEM
       representable (~> 2.0)
       uber
     docile (1.1.5)
-    domain_name (0.5.20170223)
+    domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
     enumerable-lazy (0.0.1)
     equalizer (0.0.11)
@@ -557,7 +557,7 @@ GEM
     uber (0.0.15)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.2)
+    unf_ext (0.0.7.4)
     unicode-display_width (1.1.1)
     unicorn (5.1.0)
       kgio (~> 2.6)
@@ -714,4 +714,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.14.4
+   1.14.6
