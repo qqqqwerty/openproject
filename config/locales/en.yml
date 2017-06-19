@@ -2247,3 +2247,16 @@ en:
         start_date: "Start date cannot be set on parent work packages."
     resources:
       schema: 'Schema'
+  label_transport: "Transportas"
+  label_project_state: "Projekto bûsena:"
+  label_project_planned_state: "Planuojamas"
+  label_project_in_progress_state: "Vykdomas"
+  label_project_finished_state: "Ágyvendintas"
+  label_project_has_problems_state: "Problemiðkas"
+  label_waiting_new: "Nauji: "
+  label_waiting_in_progress: "Vykdomi: "
+  label_waiting_done: "Ávykdyti: "
+  label_has_problem_as_author: "Mano sukurti problemiðki: "
+  label_has_problem_as_asignee: "Mano vykdomi problemiði: "
+  label_menu_work_packages_need_attention: "Darbø paketai: "
+  

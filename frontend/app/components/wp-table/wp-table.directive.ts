@@ -316,4 +316,38 @@ function WorkPackagesTableController($scope, $rootScope, I18n) {
       return name;
     }
   }
+  $scope.getWorkPackageState = function(statusLink, day_before_warning, warning_color, columnName) {
+    if (columnName === "status") {
+        var colors = ["", "blue", "yellow", "red", "orange"];
+        
+        var last_day = new Date(day_before_warning); 
+        last_day.setHours(0, 0, 0, 0);
+        
+        if (isNaN(last_day.getFullYear()) ||
+           isNaN(last_day.getMonth()) ||
+           isNaN(last_day.getDate())) {
+            return colors[3];
+        }
+    
+        var pieces = statusLink.split(/[\/]+/);
+        var id = (pieces[pieces.length-1])*1;
+        
+        var badStatuses: number[] = [15, 17];
+        
+        warning_color = warning_color*1;
+        
+        if (badStatuses.indexOf(id) > -1) {
+            return colors[4];
+        }
+        
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);     
+        
+        if(last_day.getTime() < today.getTime()){
+            return colors[warning_color];
+        }
+        return colors[0];
+    }
+    return "";
+  }
 }

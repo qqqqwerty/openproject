@@ -56,6 +56,8 @@ interface WorkPackageResourceEmbedded {
   type: HalResource|any;
   version: HalResource|any;
   watchers: CollectionResourceInterface;
+  warning_color: HalResource|any;
+  day_before_warning: HalResource|any;
 }
 
 interface WorkPackageResourceLinks extends WorkPackageResourceEmbedded {

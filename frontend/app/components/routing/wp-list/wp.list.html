@@ -15,13 +15,13 @@
             state-name="work-packages.list.new">
         </wp-create-button>
       </li>
-      <li class="toolbar-item hidden-for-mobile">
+      <li class="toolbar-item">
         <wp-filter-button
             filters="query.filters"
             ng-disabled="wpEditModeState.active">
         </wp-filter-button>
       </li>
-      <li class="toolbar-item hidden-for-mobile">
+      <li class="toolbar-item">
         <ul id="work-packages-view-mode-selection" class="toolbar-button-group">
           <li>
             <wp-list-view-button
@@ -40,7 +40,7 @@
           </li>
         </ul>
       </li>
-      <li class="toolbar-item hidden-for-mobile">
+      <li class="toolbar-item">
         <button id="work-packages-settings-button"
                 ng-disabled="wpEditModeState.active"
                 title="{{ I18n.t('js.button_settings') }}"

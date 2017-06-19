@@ -35,7 +35,56 @@ Redmine::MenuManager.map :top_menu do |menu|
             context: :main,
             html: { class: 'icon3 icon-star' },
             if: Proc.new { User.current.logged? }
-
+  menu.push :work_packages_new_for_me,
+            { controller: 'work_packages',
+            project_id: nil,
+            query_props: '{"f":[{"n":"status","o":"%3D","t":"list_status","v":"1"},{"n":"assignee","o":"%3D","t":"list_optional","v":"me"}]}'},
+            context: :work_packages,
+            caption: I18n.t('label_waiting_new') + WorkPackage.number_waiting_new.to_s,
+            if: Proc.new {
+              (User.current.logged? || !Setting.login_required?) &&
+                User.current.allowed_to?(:view_work_packages, nil, global: true)
+            }
+  menu.push :work_packages_in_progress_for_me,
+            { controller: '/work_packages',
+            project_id: nil,
+            query_props: '{"f":[{"n":"status","o":"%3D","t":"list_status","v":"7"},{"n":"assignee","o":"%3D","t":"list_optional","v":"me"}]}'},
+            context: :work_packages,
+            caption: I18n.t('label_waiting_in_progress') + WorkPackage.number_in_pogress.to_s,
+            if: Proc.new {
+              (User.current.logged? || !Setting.login_required?) &&
+                User.current.allowed_to?(:view_work_packages, nil, global: true)
+            }
+  menu.push :work_packages_done_for_me,
+            { controller: '/work_packages',
+            project_id: nil,
+            query_props: '{"f":[{"n":"status","o":"%3D","t":"list_status","v":"13"},{"n":"author","o":"%3D","t":"list_model","v":"me"}]}'},
+            context: :work_packages,
+            caption: I18n.t('label_waiting_done') + WorkPackage.number_done.to_s,
+            if: Proc.new {
+              (User.current.logged? || !Setting.login_required?) &&
+                User.current.allowed_to?(:view_work_packages, nil, global: true)
+            }
+  menu.push :work_packages_problematic_as_author_for_me,
+            { controller: '/work_packages',
+            project_id: nil,
+            query_props: '{"f":[{"n":"status","o":"%3D","t":"list_status","v":["15","17"]},{"n":"author","o":"%3D","t":"list_model","v":"me"}]}'},
+            context: :work_packages,
+            caption: I18n.t('label_has_problem_as_author') + WorkPackage.number_has_problems_as_author.to_s,
+            if: Proc.new {
+              (User.current.logged? || !Setting.login_required?) &&
+                User.current.allowed_to?(:view_work_packages, nil, global: true)
+            }
+  menu.push :work_packages_problematic_as_assignee_for_me,
+            { controller: '/work_packages',
+            project_id: nil,
+            query_props: '{"f":[{"n":"status","o":"%3D","t":"list_status","v":["15","17"]},{"n":"assignee","o":"%3D","t":"list_optional","v":"me"}]}'},
+            context: :work_packages,
+            caption: I18n.t('label_has_problem_as_asignee') + WorkPackage.number_has_problems_as_assignee.to_s,
+            if: Proc.new {
+              (User.current.logged? || !Setting.login_required?) &&
+                User.current.allowed_to?(:view_work_packages, nil, global: true)
+            }
   # projects menu will be added by
   # Redmine::MenuManager::TopMenuHelper#render_projects_top_menu_node
 
@@ -62,23 +111,29 @@ Redmine::MenuManager.map :top_menu do |menu|
               (User.current.logged? || !Setting.login_required?) &&
                 User.current.allowed_to?(:view_time_entries, nil, global: true)
             }
-  menu.push :help, OpenProject::Static::Links.help_link,
-            last: true,
-            caption: '',
-            html: { accesskey: OpenProject::AccessKeys.key_for(:help),
-                    title: I18n.t('label_help'),
-                    class: 'icon5 icon-help',
-                    target: '_blank' }
+  menu.push :transport,
+            { controller: '/projects', action: '41' },
+            context: :modules,
+            caption: I18n.t('label_transport'),
+            if: Proc.new {
+              (User.current.logged? || !Setting.login_required?) &&
+                User.current.allowed_to?(:view_work_packages, nil, global: true)
+            }
+#  menu.push :help, OpenProject::Static::Links.help_link,
+#            last: true,
+#            caption: '',
+#            html: { accesskey: OpenProject::AccessKeys.key_for(:help),
+#                    title: I18n.t('label_help'),
+#                    class: 'icon5 icon-help',
+#                    target: '_blank' }
 end
 
 Redmine::MenuManager.map :account_menu do |menu|
   menu.push :administration,
             { controller: '/admin', action: 'projects' },
-            html: { class: 'hidden-for-mobile' },
             if: Proc.new { User.current.admin? }
   menu.push :my_account,
             { controller: '/my', action: 'account' },
-            html: { class: 'hidden-for-mobile' },
             if: Proc.new { User.current.logged? }
   menu.push :logout, :signout_path,
             if: Proc.new { User.current.logged? }
@@ -102,21 +157,21 @@ Redmine::MenuManager.map :my_menu do |menu|
             caption: :button_change_password,
             if: Proc.new { User.current.change_password_allowed? },
             html: { class: 'icon2 icon-locked' }
-  menu.push :access_token,
-            { controller: '/my', action: 'access_token' },
-            caption: I18n.t('my_account.access_tokens.access_token'),
-            html: { class: 'icon2 icon-key' }
+#  menu.push :access_token,
+#            { controller: '/my', action: 'access_token' },
+#            caption: I18n.t('my_account.access_tokens.access_token'),
+#            html: { class: 'icon2 icon-key' }
   menu.push :mail_notifications,
             { controller: '/my', action: 'mail_notifications' },
             caption: I18n.t('activerecord.attributes.user.mail_notification'),
             html: { class: 'icon2 icon-news' }
 
-  menu.push :delete_account, :deletion_info_path,
-            caption: I18n.t('account.delete'),
-            param: :user_id,
-            if: Proc.new { Setting.users_deletable_by_self? },
-            last: :delete_account,
-            html: { class: 'icon2 icon-delete' }
+#  menu.push :delete_account, :deletion_info_path,
+#            caption: I18n.t('account.delete'),
+#            param: :user_id,
+#            if: Proc.new { Setting.users_deletable_by_self? },
+#            last: :delete_account,
+#            html: { class: 'icon2 icon-delete' }
 end
 
 Redmine::MenuManager.map :admin_menu do |menu|

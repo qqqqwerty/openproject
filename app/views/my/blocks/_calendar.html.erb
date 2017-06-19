@@ -36,7 +36,7 @@ See doc/COPYRIGHT.rdoc for more details.
   <span class="widget-box--header-title"><%=l(:label_calendar)%></span>
 </h3>
 
-<% calendar = Redmine::Helpers::Calendar.new(Date.today, current_language, :week)
+<% calendar = Redmine::Helpers::Calendar.new(Date.today, current_language, :month)
    calendar.events = calendar_items(calendar.startdt, calendar.enddt) %>
 
 <%= render partial: 'common/calendar', locals: {calendar: calendar } %>

@@ -108,7 +108,6 @@
             trigger-on-event="contextmenu"
             target="WorkPackageContextMenu"
             locals="rows,row,$index"
-            after-focus-on=".id :tabbable"
             single-click="!row.object.isNew && selectWorkPackage(row, $event)"
             ng-dblclick="!row.object.isNew && openWorkPackageInFullView(row)"
             ng-class="[
@@ -156,6 +155,10 @@
           </td>
 
           <td ng-repeat="column in columns"
+              row-info='{{row.object.dueDate}}'
+              state-info='{{row.object.status.href}}'
+              columnName-info='{{column.name}}'
+              bgcolor="{{getWorkPackageState(row.object.status.href, row.object.dayBeforeWarning, row.object.warningColor, column.name)}}"
               lang="::{{column.custom_field && column.custom_field.name_locale || locale}}"
               wp-edit-field="::getTableColumnName(row.object, column.name)"
               wp-edit-field-wrapper-classes="'-small -shrink'"
@@ -163,7 +166,7 @@
               columns="::columns"
               field-index="::$index"
               class="wp-table--cell"
-              ng-class="::{ '-short': column.name == 'id' }">
+              ng-class="::{ '-short': column.name == 'id'}">
           </td>
         </tr>
 

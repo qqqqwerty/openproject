@@ -29,21 +29,22 @@
 require 'concerns/omniauth_login'
 
 module Redmine::MenuManager::TopMenuHelper
-  include Redmine::MenuManager::TopMenu::HelpMenu
+  #include Redmine::MenuManager::TopMenu::HelpMenu
   include Redmine::MenuManager::TopMenu::ProjectsMenu
 
   def render_top_menu_left
-    content_tag :ul, id: 'account-nav-left', class: 'menu_root account-nav hidden-for-mobile' do
+    content_tag :ul, id: 'account-nav-left', class: 'menu_root account-nav' do
       [render_main_top_menu_nodes,
        render_projects_top_menu_node,
-       render_module_top_menu_node].join.html_safe
+       render_module_top_menu_node,
+       render_work_packages_top_menu_node].join.html_safe
     end
   end
 
   def render_top_menu_right
     content_tag :ul, id: 'account-nav-right', class: 'menu_root account-nav' do
-      [render_help_top_menu_node,
-       render_user_top_menu_node].join.html_safe
+      #[render_help_top_menu_node,
+      [render_user_top_menu_node].join.html_safe
     end
   end
 
@@ -112,6 +113,15 @@ module Redmine::MenuManager::TopMenuHelper
       options: { drop_down_id: 'more-menu' }
     )
   end
+  
+   def render_work_packages_top_menu_node(items = work_packages_top_menu_items)
+    render_menu_dropdown_with_items(
+      label: I18n.t(:label_menu_work_packages_need_attention) + WorkPackage.number_needs_attention.to_s,
+      label_options: {  },
+      items: items,
+      options: { drop_down_id: 'work_packages-menu' }
+    )
+  end
 
   def render_main_top_menu_nodes(items = main_top_menu_items)
     items.map { |item|
@@ -135,6 +145,10 @@ module Redmine::MenuManager::TopMenuHelper
 
   def help_menu_item
     split_top_menu_into_main_or_more_menus[:help]
+  end
+  
+  def work_packages_top_menu_items
+    split_top_menu_into_main_or_more_menus[:work_packages]
   end
 
   # Split the :top_menu into separate :main and :modules items

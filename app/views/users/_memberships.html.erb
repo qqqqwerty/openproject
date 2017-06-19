@@ -30,7 +30,9 @@ See doc/COPYRIGHT.rdoc for more details.
 <% projects = Project.active.order('lft') %>
 
 <div class="grid-block">
-  <div class="grid-content">
+  <div class="grid-content" style="-webkit-flex: 1 1 70%; /* Safari 6.1+ */
+                                   -ms-flex: 1 1 70%; /* IE 10 */ 
+                                   flex: 1 1 70%;">
   <% if @user.memberships.any? %>
     <div class="generic-table--container">
       <div class="generic-table--results-container">
@@ -114,7 +116,9 @@ See doc/COPYRIGHT.rdoc for more details.
       <%= no_results_box %>
     <% end %>
   </div>
-  <div class="grid-content">
+  <div class="grid-content" style="-webkit-flex: 1 1 30%; /* Safari 6.1+ */
+                                   -ms-flex: 1 1 30%; /* IE 10 */ 
+                                   flex: 1 1 30%;">
     <% if projects.any? %>
       <%= labelled_tabular_form_for(:membership,
                                     url: user_memberships_path(user_id: @user),

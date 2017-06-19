@@ -380,6 +380,16 @@ module API
                  exec_context: :decorator,
                  if: -> (*) { embed_links }
 
+                        
+        property :day_before_warning,
+                 exec_context: :decorator,
+                 getter: -> (*) do
+                   datetime_formatter.format_date(represented.day_before_warning, allow_nil: true)
+                 end,
+                 render_nil: true
+               
+        property :warning_color, render_nil: true
+                        
         def _type
           'WorkPackage'
         end

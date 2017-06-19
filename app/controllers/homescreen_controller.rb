@@ -31,9 +31,9 @@ class HomescreenController < ApplicationController
   skip_before_action :check_if_login_required, only: [:robots]
 
   def index
-    @newest_projects = Project.visible.newest.take(3)
-    @newest_users = User.active.newest.take(3)
-    @news = News.latest(count: 3)
+    @newest_projects = Project.visible.newest.take(20)
+    @newest_users = User.active.newest.take(20)
+    @news = News.latest(count: 20)
     @announcement = Announcement.active_and_current
 
     @homescreen = OpenProject::Static::Homescreen

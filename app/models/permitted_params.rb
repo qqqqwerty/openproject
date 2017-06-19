@@ -239,7 +239,9 @@ class PermittedParams
                                          :planning_element_status_id,
                                          :parent_id,
                                          :responsible_id,
-                                         :lock_version)
+                                         :lock_version,
+                                         :warning_color,
+                                         :day_before_warning)
   end
 
   def wiki_page_rename
@@ -285,6 +287,7 @@ class PermittedParams
                                                 :responsible_id,
                                                 :identifier,
                                                 :project_type_id,
+                                                :state,
                                                 custom_fields: [],
                                                 work_package_custom_field_ids: [],
                                                 type_ids: [],
