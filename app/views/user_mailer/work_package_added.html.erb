@@ -27,8 +27,8 @@ See doc/COPYRIGHT.rdoc for more details.
 
 ++#%>
 
+<h2><%= @issue.description %></h2><br>
 <%= t(:text_work_package_added, id: "##{@issue.id}", author: @issue.author) %>
-<h2><%= @issue.description %></h2>
 <%= format_text(@journal.notes, only_path: false, object: @issue, project: @issue.project) %>
 <hr />
 <%= render partial: 'issue_details', locals: { issue: @issue } %>
