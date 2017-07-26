@@ -148,7 +148,7 @@ export class WorkPackagesTableController {
       }
       $scope.timelineVisible = timelines.current;
     });
-  }
+        }
 
   public registerTimeline(controller:WorkPackageTimelineTableController, body:HTMLElement) {
 

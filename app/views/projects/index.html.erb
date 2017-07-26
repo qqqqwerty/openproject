@@ -59,7 +59,11 @@ See doc/COPYRIGHT.rdoc for more details.
 <% if @projects.any? %>
   <% if User.current.logged? %>
     <p style="float:right;">
-      <span class="icon icon-star"><%= l(:label_my_projects) %></span>
+      <span><%=  I18n.t(:label_project_state) %></span><br/>
+      <%=  content_tag(:span, image_tag("project_stars/blue_star.png", size: "20x20") + I18n.t(:label_project_planned_state)) %><br/>
+      <%=  content_tag(:span, image_tag("project_stars/yellow_star.png", size: "20x20") + I18n.t(:label_project_in_progress_state)) %><br/>
+      <%=  content_tag(:span, image_tag("project_stars/green_star.png", size: "20x20") + I18n.t(:label_project_finished_state)) %><br/>
+      <%=  content_tag(:span, image_tag("project_stars/purple_star.png", size: "20x20") + I18n.t(:label_project_has_problems_state)) %>
     </p>
   <% end %>
 

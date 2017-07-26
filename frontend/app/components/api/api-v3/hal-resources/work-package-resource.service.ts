@@ -68,6 +68,8 @@ interface WorkPackageResourceEmbedded {
   // Only for milestones
   date: string;
   relatedBy: RelationResourceInterface|null;
+  warning_color: HalResource|any;
+  day_before_warning: HalResource|any;
 }
 
 interface WorkPackageResourceLinks extends WorkPackageResourceEmbedded {

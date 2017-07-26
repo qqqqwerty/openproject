@@ -2402,3 +2402,16 @@ en:
       writing_read_only_attributes: "You must not write a read-only attribute."
     resources:
       schema: 'Schema'
+  label_transport: "Transportas"
+  label_project_state: "Projekto būsena:"
+  label_project_planned_state: "Planuojamas"
+  label_project_in_progress_state: "Vykdomas"
+  label_project_finished_state: "Įgyvendintas"
+  label_project_has_problems_state: "Problemiškas"
+  label_waiting_new: "Nauji: "
+  label_waiting_in_progress: "Vykdomi: "
+  label_waiting_done: "Įvykdyti: "
+  label_has_problem_as_author: "Mano sukurti problemiški: "
+  label_has_problem_as_asignee: "Mano vykdomi problemiški: "
+  label_menu_work_packages_need_attention: "Darbų paketai: "
+  label_announcement_plural: "Pranešimai"

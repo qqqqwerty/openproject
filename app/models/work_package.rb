@@ -44,6 +44,20 @@ class WorkPackage < ActiveRecord::Base
   DONE_RATIO_OPTIONS = %w(field status disabled).freeze
   ATTRIBS_WITH_VALUES_FROM_CHILDREN =
     %w(start_date due_date estimated_hours done_ratio).freeze
+   
+  STATE_ID_NEW = 1
+  STATE_ID_IN_PROGRESS = 7
+  STATE_ID_DONE = 13
+  
+  STATE_ID_STOPPED = 15
+  STATE_ID_DISAPPROVED = 17
+  
+  COLOR_NO_COLOR_ID = 0
+  COLOR_INFORMATION_COLOR_ID = 1
+  COLOR_WARNING_COLOR_ID = 2
+  COLOR_DANGER_COLOR_ID = 3
+  
+  NUMBER_WORK_DAYS_NEW_TO_IN_PROGRESS = 1
   # <<< issues.rb <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
   belongs_to :project
@@ -125,7 +139,8 @@ class WorkPackage < ActiveRecord::Base
 
   acts_as_watchable
 
-  before_save :store_former_parent_id
+  before_save :store_former_parent_id,
+              :get_warning_color_date
 
   include OpenProject::NestedSet::WithRootIdScope
 
@@ -958,5 +973,71 @@ class WorkPackage < ActiveRecord::Base
     end
 
     related.select(&:present?)
+  end
+  #  STATE_ID_NEW = 1
+#  STATE_ID_IN_PROGRESS = 7
+#  STATE_ID_DONE = 13
+#  STATE_ID_STOPPED = 15
+#  STATE_ID_DISAPPROVED = 17
+#  
+#  COLOR_NO_COLOR_ID = 0
+#  COLOR_INFORMATION_COLOR_ID = 1
+#  COLOR_WARNING_COLOR_ID = 2
+#  COLOR_DANGER_COLOR_ID = 3
+#  
+#  NUMBER_WORK_DAYS_NEW_TO_IN_PROGRESS = 1
+#  NUMBER_WORK_DAYS_DONE_TO_DIS_APPROVED = 2
+  
+  def get_warning_color_date
+    if !self.status == STATE_ID_NEW
+      status_before = WorkPackage.visible.where(id: self.id).first.status_id
+    else
+      status_before = STATE_ID_NEW
+    end
+    if self.status_id == STATE_ID_NEW
+      self.warning_color = COLOR_DANGER_COLOR_ID
+      self.day_before_warning = NonWorkDay.get_work_day(NUMBER_WORK_DAYS_NEW_TO_IN_PROGRESS)
+    elsif self.status_id == STATE_ID_IN_PROGRESS
+      self.warning_color = COLOR_WARNING_COLOR_ID
+      self.day_before_warning = self.due_date
+    elsif (status_before == STATE_ID_IN_PROGRESS && 
+          self.status_id == STATE_ID_DONE)
+      self.warning_color = COLOR_INFORMATION_COLOR_ID
+      self.day_before_warning = NonWorkDay.get_work_day(NUMBER_WORK_DAYS_DONE_TO_DIS_APPROVED)
+    elsif (self.status_id != STATE_ID_NEW && 
+          self.status_id != STATE_ID_IN_PROGRESS && 
+          self.status_id != STATE_ID_DONE)
+      self.warning_color = COLOR_NO_COLOR_ID
+      self.day_before_warning = self.due_date
+    end
+  end
+  
+  def self.number_waiting_new
+    number = WorkPackage.visible.where("assigned_to_id = :user_id AND status_id = :status_id",
+    {user_id: User.current.id, status_id: STATE_ID_NEW}).count
+  end
+  
+  def self.number_in_pogress
+    number = WorkPackage.visible.where("assigned_to_id = :user_id AND status_id = :status_id",
+      {user_id: User.current.id, status_id: STATE_ID_IN_PROGRESS}).count
+  end
+  
+  def self.number_done
+    number = WorkPackage.visible.where("author_id = :user_id AND status_id = :status_id",
+      {user_id: User.current.id, status_id: STATE_ID_DONE}).count
+  end
+  
+  def self.number_has_problems_as_author
+    number = WorkPackage.visible.where("author_id = :user_id AND status_id IN(:status_ids)",
+      {user_id: User.current.id, status_ids: [STATE_ID_STOPPED, STATE_ID_DISAPPROVED]}).count
+  end
+  
+  def self.number_has_problems_as_assignee
+    number = WorkPackage.visible.where("assigned_to_id = :user_id AND status_id IN(:status_ids)",
+      {user_id: User.current.id, status_ids: [STATE_ID_STOPPED, STATE_ID_DISAPPROVED]}).count
+  end
+  
+  def self.number_needs_attention
+    number_waiting_new + number_in_pogress + number_done + number_has_problems_as_author + number_has_problems_as_assignee
   end
 end

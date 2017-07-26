@@ -31,6 +31,13 @@ export class CellBuilder {
     container.appendChild(displayElement);
     td.appendChild(container);
 
+    if (name === 'status') {
+        var background_color: string = this.getWorkPackageState(workPackage.status.href, workPackage.dayBeforeWarning, workPackage.warningColor);
+        if (background_color != null) {
+            td.setAttribute('bgcolor', background_color);
+        }
+    }
+
     return td;
   }
 
@@ -89,6 +96,35 @@ export class CellBuilder {
 
     return name;
   }
+
+    private getWorkPackageState(status_href:string, day_before_warning:number, warning_color:number): string {
+      var colors: string[] = ['', 'blue', 'yellow', 'red', 'orange'];
+      var last_day = new Date(day_before_warning); 
+      last_day.setHours(0, 0, 0, 0);
+
+      if (isNaN(last_day.getFullYear()) ||
+         isNaN(last_day.getMonth()) ||
+         isNaN(last_day.getDate())) {
+          return colors[3];
+      }
+
+      var badStatuses: number[] = [15, 17];
+
+      var pieces: string[] = status_href.split(/[\/]+/);
+      var id: number = Number(pieces[pieces.length-1]);
+
+      if (badStatuses.indexOf(id) > -1) {
+          return colors[4];
+      }
+
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);     
+
+      if(last_day.getTime() < today.getTime()){
+          return colors[warning_color];
+      }
+      return colors[0];
+    }
 }
 
 CellBuilder.$inject = ['wpDisplayField'];

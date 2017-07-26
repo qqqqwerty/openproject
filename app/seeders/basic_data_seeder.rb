@@ -37,7 +37,8 @@ class BasicDataSeeder < CompositeSeeder
       BasicData::PrioritySeeder,
       BasicData::ProjectStatusSeeder,
       BasicData::ProjectTypeSeeder,
-      BasicData::SettingSeeder
+      BasicData::SettingSeeder,
+      BasicData::NonWorkDaysSeeder
     ]
   end
 
