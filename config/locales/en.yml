@@ -2415,3 +2415,13 @@ en:
   label_has_problem_as_asignee: "Mano vykdomi problemiški: "
   label_menu_work_packages_need_attention: "Darbų paketai: "
   label_announcement_plural: "Pranešimai"
+  display_as:
+    used_user: "Peržiūrima kaip: "
+    existing_dislay_work_packages_as: "Rodyti darbų paketus kaip vartotojui"
+    existing_used_user: "Vartotojas, kurio laukiantys darbų paketai peržiūrimi: "
+    new_dislay_work_packages_as: "Rodyti darbų paketus kaip naujai parinktam vartotojui: "
+    new_used_user_details: "Pasirinkti vartotoją, kurio laukiantys darbų paketai bus peržiūrimi: "
+    new_used_user: "Naujas peržiūrimas vartotojas"
+    label_used_user: "Peržiūrimas vartotojas"
+    used_user_updated: "Peržiūrimas vartotojas sėkmingai pakeistas"
+    used_user_not_found: "Vidinė klaida: pageidaujamas vartotojas nerastas"

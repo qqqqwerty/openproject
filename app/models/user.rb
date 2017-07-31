@@ -53,7 +53,7 @@ class User < Principal
     USER_MAIL_OPTION_ONLY_OWNER,
     USER_MAIL_OPTION_NON
   ]
-
+  
   has_and_belongs_to_many :groups,
                           join_table:   "#{table_name_prefix}group_users#{table_name_suffix}",
                           after_add:    ->(user, group) { group.user_added(user) },
@@ -149,6 +149,38 @@ class User < Principal
 
   scope :newest, -> { not_builtin.order(created_on: :desc) }
 
+  def getUsedUserName
+    if self.used_user == nil
+      self.used_user = self.id
+    end
+    if User.current.admin?
+      if used_user = User.exists?(self.used_user)
+        User.find(self.used_user).name
+      else
+        "-"
+      end
+    else
+      "-"
+    end
+  end
+  
+  def used_user=(val)
+    if User.current.admin?
+      super(val)
+    else
+      Rails.logger.error('Non admin user tried to change used_user')
+    end
+  end
+  
+  def used_user
+    if super == nil
+      self.used_user = self.id
+      self.id
+    else
+      super
+    end
+  end
+      
   def self.unique_attribute
     :login
   end

@@ -128,7 +128,7 @@ module Redmine::MenuManager::TopMenuHelper
     if (User.current.logged? || !Setting.login_required?) &&
                 User.current.allowed_to?(:view_work_packages, nil, global: true)
       render_menu_dropdown_with_items(
-        label: I18n.t(:label_menu_work_packages_need_attention) + WorkPackage.number_needs_attention.to_s,
+        label: I18n.t(:label_menu_work_packages_need_attention) + WorkPackage.number_needs_attention(User.current.used_user).to_s,
         label_options: {  },
         items: items,
         options: { drop_down_id: 'work_packages-menu'}

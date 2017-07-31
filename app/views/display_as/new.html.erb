@@ -1,0 +1,6 @@
+<% html_title t(:'display_as.new_dislay_work_packages_as') %>
+
+<%= toolbar title: l('display_as.new_used_user_details') %>
+
+<%= render partial: "display_as/form",
+             locals: {new_user_id: @new_user_id, user_id: @user_id, users: @users} %>

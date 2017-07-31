@@ -1012,32 +1012,39 @@ class WorkPackage < ActiveRecord::Base
     end
   end
   
-  def self.number_waiting_new
-    number = WorkPackage.visible.where("assigned_to_id = :user_id AND status_id = :status_id",
-    {user_id: User.current.id, status_id: STATE_ID_NEW}).count
-  end
-  
-  def self.number_in_pogress
-    number = WorkPackage.visible.where("assigned_to_id = :user_id AND status_id = :status_id",
-      {user_id: User.current.id, status_id: STATE_ID_IN_PROGRESS}).count
-  end
-  
-  def self.number_done
-    number = WorkPackage.visible.where("author_id = :user_id AND status_id = :status_id",
-      {user_id: User.current.id, status_id: STATE_ID_DONE}).count
-  end
-  
-  def self.number_has_problems_as_author
+  def self.number_as_author_with_state(status_ids, user_id = nil)
+    if user_id == nil || !user_id.is_a?(Integer)
+      user_id = User.current.id
+    end
+    if !User.current.admin?
+      user_id = User.current.id
+    end
     number = WorkPackage.visible.where("author_id = :user_id AND status_id IN(:status_ids)",
-      {user_id: User.current.id, status_ids: [STATE_ID_STOPPED, STATE_ID_DISAPPROVED]}).count
+      {user_id: user_id, status_ids: status_ids}).count
   end
   
-  def self.number_has_problems_as_assignee
+  def self.number_as_assignee_with_state(status_ids, user_id = nil)
+    if user_id == nil || !user_id.is_a?(Integer)
+      user_id = User.current.id
+    end
+    if !User.current.admin?
+      user_id = User.current.id
+    end
     number = WorkPackage.visible.where("assigned_to_id = :user_id AND status_id IN(:status_ids)",
-      {user_id: User.current.id, status_ids: [STATE_ID_STOPPED, STATE_ID_DISAPPROVED]}).count
+      {user_id: user_id, status_ids: status_ids}).count
   end
   
-  def self.number_needs_attention
-    number_waiting_new + number_in_pogress + number_done + number_has_problems_as_author + number_has_problems_as_assignee
+  def self.number_needs_attention(user_id = nil)
+    if user_id == nil || !user_id.is_a?(Integer)
+      user_id = User.current.id
+    end
+    if !User.current.admin?
+      user_id = User.current.id
+    end
+    number_as_assignee_with_state(STATE_ID_NEW, user_id) + 
+      number_as_assignee_with_state(STATE_ID_IN_PROGRESS, user_id) + 
+      number_as_author_with_state(STATE_ID_DONE, user_id) + 
+      number_as_author_with_state([STATE_ID_STOPPED, STATE_ID_DISAPPROVED], user_id) + 
+      number_as_assignee_with_state([STATE_ID_STOPPED, STATE_ID_DISAPPROVED], user_id)
   end
 end

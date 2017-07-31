@@ -33,52 +33,94 @@ Redmine::MenuManager.map :top_menu do |menu|
 
   # projects menu will be added by
   # Redmine::MenuManager::TopMenuHelper#render_projects_top_menu_node
-  menu.push :work_packages_new_for_me,
+  menu.push :viewing_work_packages_as,
+            { controller: 'display_as',
+            project_id: nil },
+            context: :work_packages,
+            caption: I18n.t(:'display_as.used_user') + User.current.getUsedUserName,
+            if: Proc.new {
+              User.current.admin? &&
+              (User.current.logged? || !Setting.login_required?) &&
+                User.current.allowed_to?(:view_work_packages, nil, global: true)
+            }
+  menu.push :work_packages_new_for_user,
             { controller: 'work_packages',
             project_id: nil,
-            query_props: '{"f":[{"n":"status","o":"%3D","t":"list_status","v":"1"},{"n":"assignee","o":"%3D","t":"list_optional","v":"me"}]}'},
+            query_props: '{"f":[{"n":"status","o":"%3D","t":"list_status","v":"' +
+              WorkPackage::STATE_ID_NEW.to_s +
+              '"},{"n":"assignee","o":"%3D","t":"list_optional","v":"' +
+              User.current.used_user.to_s +
+              '"}]}'},
             context: :work_packages,
-            caption: I18n.t('label_waiting_new') + WorkPackage.number_waiting_new.to_s,
+            caption: I18n.t('label_waiting_new') +
+              WorkPackage.number_as_assignee_with_state(WorkPackage::STATE_ID_NEW,
+                                            User.current.used_user).to_s,
             if: Proc.new {
               (User.current.logged? || !Setting.login_required?) &&
                 User.current.allowed_to?(:view_work_packages, nil, global: true)
             }
-  menu.push :work_packages_in_progress_for_me,
+  menu.push :work_packages_in_progress_for_user,
             { controller: '/work_packages',
             project_id: nil,
-            query_props: '{"f":[{"n":"status","o":"%3D","t":"list_status","v":"7"},{"n":"assignee","o":"%3D","t":"list_optional","v":"me"}]}'},
+            query_props: '{"f":[{"n":"status","o":"%3D","t":"list_status","v":"' +
+              WorkPackage::STATE_ID_IN_PROGRESS.to_s +
+              '"},{"n":"assignee","o":"%3D","t":"list_optional","v":"' +
+              User.current.used_user.to_s +
+              '"}]}'},
             context: :work_packages,
-            caption: I18n.t('label_waiting_in_progress') + WorkPackage.number_in_pogress.to_s,
+            caption: I18n.t('label_waiting_in_progress') +
+              WorkPackage.number_as_assignee_with_state(WorkPackage::STATE_ID_IN_PROGRESS,
+                                            User.current.used_user).to_s,
             if: Proc.new {
               (User.current.logged? || !Setting.login_required?) &&
                 User.current.allowed_to?(:view_work_packages, nil, global: true)
             }
-  menu.push :work_packages_done_for_me,
+  menu.push :work_packages_done_for_user,
             { controller: '/work_packages',
             project_id: nil,
-            query_props: '{"f":[{"n":"status","o":"%3D","t":"list_status","v":"13"},{"n":"author","o":"%3D","t":"list_model","v":"me"}]}'},
+            query_props: '{"f":[{"n":"status","o":"%3D","t":"list_status","v":"' +
+              WorkPackage::STATE_ID_DONE.to_s +
+              '"},{"n":"author","o":"%3D","t":"list_model","v":"' +
+              User.current.used_user.to_s +
+              '"}]}'},
             context: :work_packages,
-            caption: I18n.t('label_waiting_done') + WorkPackage.number_done.to_s,
+            caption: I18n.t('label_waiting_done') +
+              WorkPackage.number_as_author_with_state(WorkPackage::STATE_ID_DONE,
+                                            User.current.used_user).to_s,
             if: Proc.new {
               (User.current.logged? || !Setting.login_required?) &&
                 User.current.allowed_to?(:view_work_packages, nil, global: true)
             }
-  menu.push :work_packages_problematic_as_author_for_me,
+  menu.push :work_packages_problematic_as_author_for_user,
             { controller: '/work_packages',
             project_id: nil,
-            query_props: '{"f":[{"n":"status","o":"%3D","t":"list_status","v":["15","17"]},{"n":"author","o":"%3D","t":"list_model","v":"me"}]}'},
+            query_props: '{"f":[{"n":"status","o":"%3D","t":"list_status","v":["' +
+              WorkPackage::STATE_ID_STOPPED.to_s + '", "' +
+              WorkPackage::STATE_ID_DISAPPROVED.to_s +
+              '"]},{"n":"author","o":"%3D","t":"list_model","v":"' +
+              User.current.used_user.to_s +
+              '"}]}'},
             context: :work_packages,
-            caption: I18n.t('label_has_problem_as_author') + WorkPackage.number_has_problems_as_author.to_s,
+            caption: I18n.t('label_has_problem_as_author') +
+              WorkPackage.number_as_author_with_state([WorkPackage::STATE_ID_STOPPED, WorkPackage::STATE_ID_DISAPPROVED],
+                                            User.current.used_user).to_s,
             if: Proc.new {
               (User.current.logged? || !Setting.login_required?) &&
                 User.current.allowed_to?(:view_work_packages, nil, global: true)
             }
-  menu.push :work_packages_problematic_as_assignee_for_me,
+  menu.push :work_packages_problematic_as_assignee_for_user,
             { controller: '/work_packages',
             project_id: nil,
-            query_props: '{"f":[{"n":"status","o":"%3D","t":"list_status","v":["15","17"]},{"n":"assignee","o":"%3D","t":"list_optional","v":"me"}]}'},
+            query_props: '{"f":[{"n":"status","o":"%3D","t":"list_status","v":["' +
+              WorkPackage::STATE_ID_STOPPED.to_s + '", "' +
+              WorkPackage::STATE_ID_DISAPPROVED.to_s +
+              '"]},{"n":"assignee","o":"%3D","t":"list_optional","v":"' +
+              User.current.used_user.to_s +
+              '"}]}'},
             context: :work_packages,
-            caption: I18n.t('label_has_problem_as_asignee') + WorkPackage.number_has_problems_as_assignee.to_s,
+            caption: I18n.t('label_has_problem_as_asignee') +
+              WorkPackage.number_as_assignee_with_state([WorkPackage::STATE_ID_STOPPED, WorkPackage::STATE_ID_DISAPPROVED],
+                                            User.current.used_user).to_s,
             if: Proc.new {
               (User.current.logged? || !Setting.login_required?) &&
                 User.current.allowed_to?(:view_work_packages, nil, global: true)
@@ -265,6 +307,11 @@ Redmine::MenuManager.map :admin_menu do |menu|
             { controller: '/project_types', action: 'index' },
             caption:    :'timelines.admin_menu.project_types',
             icon: 'icon2 icon-project-types'
+          
+  menu.push :display_as,
+            { controller: '/display_as', action: 'index' },
+            caption:    :'display_as.label_used_user',
+            icon: 'icon2 icon-group'
 
   menu.push :enterprise,
             { controller: '/enterprises', action: 'show' },

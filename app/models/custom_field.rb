@@ -32,7 +32,7 @@ class CustomField < ActiveRecord::Base
 
   has_many :custom_values, dependent: :delete_all
   has_many :custom_options, -> { order(position: :asc) }, dependent: :delete_all
-
+ 
   acts_as_list scope: 'type = \'#{self.class}\''
 
   validates_presence_of :field_format
@@ -114,6 +114,15 @@ class CustomField < ActiveRecord::Base
       possible_values.map { |option| [option.value, option.id.to_s] }
     else
       possible_values
+    end
+  end
+  
+  def possible_values_options_all_users
+    case field_format
+    when 'user'
+      User.all.sort.map { |u| [u.to_s, u.id.to_s] }
+    else
+      []
     end
   end
 

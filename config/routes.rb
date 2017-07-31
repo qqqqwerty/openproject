@@ -596,4 +596,6 @@ OpenProject::Application.routes.draw do
   if Rails.env.development?
     get '/styleguide' => redirect('/assets/styleguide.html')
   end
+  
+  resources :display_as
 end

@@ -1,0 +1,15 @@
+<% html_title t(:'display_as.existing_dislay_work_packages_as') %>
+
+<%= toolbar title: l('display_as.existing_used_user') do %>
+  <li class="toolbar-item">
+    <%= link_to 'display_as/new',
+          { class: 'button -alt-highlight',
+            aria: {label: l('display_as.new_used_user_details')},
+            title: l('display_as.new_used_user')} do %>
+      <%= op_icon('button--icon icon-add') %>
+      <span class="button--text"><%= t(:'display_as.new_used_user') %></span>
+    <% end %>
+  </li>
+<% end %>
+
+<p><%=@user_name %></p>

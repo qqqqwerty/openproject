@@ -92,3 +92,7 @@ npm-debug.log*
 node_modules/
 /nbproject/private/
 /nbproject/
+/vendor/
+/vendored-plugins/
+/.heroku/
+

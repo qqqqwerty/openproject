@@ -40,7 +40,12 @@ class Queries::WorkPackages::Filter::CustomFieldFilter <
       [[I18n.t(:general_text_yes), CustomValue::BoolStrategy::DB_VALUE_TRUE],
        [I18n.t(:general_text_no), CustomValue::BoolStrategy::DB_VALUE_FALSE]]
     when 'user', 'version', 'list'
-      custom_field.possible_values_options(project)
+      Rails.logger.warn("CustomFieldFilter:43 " + project.inspect)
+      if custom_field.field_format == 'user' && project == nil
+        custom_field.possible_values_options_all_users
+      else
+        custom_field.possible_values_options(project)
+      end
     end
   end
 
@@ -89,6 +94,7 @@ class Queries::WorkPackages::Filter::CustomFieldFilter <
   end
 
   def self.all_for(context = nil)
+    Rails.logger.warn(context.inspect)
     project = context ? context.project : nil
 
     custom_fields(project).map do |cf|
@@ -106,16 +112,18 @@ class Queries::WorkPackages::Filter::CustomFieldFilter <
       WorkPackageCustomField
         .filter
         .for_all
-        .where.not(field_format: ['user', 'version'])
+        .where.not(field_format: ['version'])
     end
   end
 
   def ar_object_filter?
-    %w{user version list}.include? custom_field.field_format
+    %w{version list}.include? custom_field.field_format
   end
 
   def available?
     custom_field.present?
+    Rails.logger.warn("Asked me!")
+    true
   end
 
   def value_objects
