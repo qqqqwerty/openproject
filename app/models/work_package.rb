@@ -58,6 +58,7 @@ class WorkPackage < ActiveRecord::Base
   COLOR_DANGER_COLOR_ID = 3
   
   NUMBER_WORK_DAYS_NEW_TO_IN_PROGRESS = 1
+  NUMBER_WORK_DAYS_DONE_TO_DIS_APPROVED = 2
   # <<< issues.rb <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
   belongs_to :project
@@ -989,8 +990,8 @@ class WorkPackage < ActiveRecord::Base
 #  NUMBER_WORK_DAYS_DONE_TO_DIS_APPROVED = 2
   
   def get_warning_color_date
-    if !self.status == STATE_ID_NEW
-      status_before = WorkPackage.visible.where(id: self.id).first.status_id
+    if self.status != STATE_ID_NEW
+      status_before = WorkPackage.visible.find_by_id(self.id).status_id
     else
       status_before = STATE_ID_NEW
     end
