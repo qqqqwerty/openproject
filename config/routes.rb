@@ -597,5 +597,5 @@ OpenProject::Application.routes.draw do
     get '/styleguide' => redirect('/assets/styleguide.html')
   end
   
-  resources :display_as
+  resources :display_as, only: [:index, :new, :create]
 end

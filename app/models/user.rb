@@ -164,14 +164,6 @@ class User < Principal
     end
   end
   
-  def used_user=(val)
-    if User.current.admin?
-      super(val)
-    else
-      Rails.logger.error('Non admin user tried to change used_user')
-    end
-  end
-  
   def used_user
     if super == nil
       self.used_user = self.id
