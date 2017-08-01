@@ -38,6 +38,10 @@ class HomescreenController < ApplicationController
 
     @homescreen = OpenProject::Static::Homescreen
   end
+  
+  def favicon
+    send_file 'public/favicon.ico', type: 'image/x-icon', disposition: 'inline'
+  end
 
   def robots
     @projects = Project.active.public_projects

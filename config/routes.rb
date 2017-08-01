@@ -598,4 +598,7 @@ OpenProject::Application.routes.draw do
   end
   
   resources :display_as, only: [:index, :new, :create]
+  
+  #https://rubyplus.com/articles/4071-How-to-fix-favicon-error-in-Rails
+  get 'favicon', to: "homescreen#favicon"
 end
