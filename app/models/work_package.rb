@@ -991,7 +991,12 @@ class WorkPackage < ActiveRecord::Base
   
   def get_warning_color_date
     if self.status != STATE_ID_NEW
-      status_before = WorkPackage.visible.find_by_id(self.id).status_id
+      work_package_obj = WorkPackage.visible.find_by_id(self.id)
+      if work_package_obj != nil
+        status_before = work_package_obj.status_id
+      else
+        status_before = STATE_ID_NEW
+      end
     else
       status_before = STATE_ID_NEW
     end

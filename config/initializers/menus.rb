@@ -34,7 +34,7 @@ Redmine::MenuManager.map :top_menu do |menu|
   # projects menu will be added by
   # Redmine::MenuManager::TopMenuHelper#render_projects_top_menu_node
   menu.push :viewing_work_packages_as,
-            { controller: 'display_as',
+            { controller: 'display_as/new',
             project_id: nil },
             context: :work_packages,
             caption: I18n.t(:'display_as.used_user') + User.current.getUsedUserName,

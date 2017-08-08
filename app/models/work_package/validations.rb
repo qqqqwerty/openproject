@@ -29,6 +29,8 @@
 
 module WorkPackage::Validations
   extend ActiveSupport::Concern
+  TASK_TYPE_ID = 1
+  MATERIAL_ORDER_TYPE_ID = 10
 
   included do
     attr_accessor :skip_fixed_version_validation,
@@ -65,6 +67,7 @@ module WorkPackage::Validations
     validate :validate_descendants, unless: :skip_descendants_validation
 
     validate :validate_estimated_hours
+    validate :validate_date_ant_assignee
 
     scope :eager_load_for_validation, ->() {
       includes({ project: [:enabled_modules, :work_package_custom_fields, :versions] },
@@ -171,6 +174,21 @@ module WorkPackage::Validations
   def validate_estimated_hours
     if !estimated_hours.nil? && estimated_hours < 0
       errors.add :estimated_hours, :only_values_greater_or_equal_zeroes_allowed
+    end
+  end
+  
+  
+  def validate_date_ant_assignee
+    if type_id == TASK_TYPE_ID || type_id == MATERIAL_ORDER_TYPE_ID
+      if !start_date.present?
+        errors.add :start_date, :blank
+      end
+      if !due_date.present?
+        errors.add :due_date, :blank
+      end
+      if !assigned_to_id.present?
+        errors.add :assigned_to_id, :blank
+      end
     end
   end
 
