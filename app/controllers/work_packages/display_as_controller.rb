@@ -16,7 +16,7 @@ class DisplayAsController < ApplicationController
     @new_user_id = User.current.id
     @user_id = User.current.used_user
     @users = []
-    user_objects = User.all
+    user_objects = User.order(:firstname)
     user_objects.each do |user_object|
       @users.push([user_object.to_s, user_object.id])
     end

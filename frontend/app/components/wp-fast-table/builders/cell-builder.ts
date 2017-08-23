@@ -40,7 +40,7 @@ export class CellBuilder {
   }
 
     private getWorkPackageState(status_href:string, day_before_warning:number, warning_color:number): string {
-      var colors: string[] = ['', 'blue', 'yellow', 'red', 'orange'];
+      var colors: string[] = ['', 'cyan', 'yellow', 'red', 'orange'];
       var last_day = new Date(day_before_warning); 
       last_day.setHours(0, 0, 0, 0);
 
