@@ -35,14 +35,14 @@ module Redmine::MenuManager::TopMenuHelper
   def render_top_menu_left
     content_tag :ul, id: 'account-nav-left', class: 'menu_root account-nav' do
       [render_main_top_menu_nodes,
-       render_projects_top_menu_node,
-       render_work_packages_top_menu_node].join.html_safe
+       render_projects_top_menu_node].join.html_safe
     end
   end
 
   def render_top_menu_right
     content_tag :ul, id: 'account-nav-right', class: 'menu_root account-nav' do
-      [render_module_top_menu_node,
+      [render_work_packages_top_menu_node,
+        render_module_top_menu_node,
 #       render_help_top_menu_node,
        render_user_top_menu_node].join.html_safe
     end
@@ -131,7 +131,7 @@ module Redmine::MenuManager::TopMenuHelper
         label: I18n.t(:label_menu_work_packages_need_attention) + WorkPackage.number_needs_attention(User.current.used_user).to_s,
         label_options: {  },
         items: items,
-        options: { drop_down_id: 'work_packages-menu'}
+        options: { drop_down_id: 'work_packages-menu', drop_down_class: 'drop-down--work_packages_menu '}
       )
     end
   end

@@ -21,8 +21,7 @@ export class CellBuilder {
 
     container.appendChild(displayElement);
     td.appendChild(container);
-
-    if (name === 'status') {
+    if (attribute === 'status') {
         var background_color: string = this.getWorkPackageState(workPackage.status.href, workPackage.dayBeforeWarning, workPackage.warningColor);
         if (background_color != null) {
             td.setAttribute('bgcolor', background_color);
