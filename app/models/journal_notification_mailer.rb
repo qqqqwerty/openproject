@@ -60,7 +60,7 @@ class JournalNotificationMailer
 
     def send_notification?(journal)
       (Setting.notified_events.include?('work_package_added') && journal.initial?) ||
-        (Setting.notified_events.include?('work_package_updated') && !journal.initial?) ||
+        (Setting.notified_events.include?('work_package_updated') && !journal.initial? && !has_only_status_changed?(journal)) ||
         notify_for_notes?(journal) ||
         notify_for_status?(journal) ||
         notify_for_priority(journal)
@@ -91,6 +91,12 @@ class JournalNotificationMailer
 
     def notification_receivers(work_package)
       (work_package.recipients + work_package.watcher_recipients).uniq
+    end
+    
+    def has_only_status_changed?(journal)
+      return journal.details.length == 1 &&
+             journal.details.has_key?(:status_id) &&
+             !Setting.notified_events.include?('status_updated')
     end
   end
 end
