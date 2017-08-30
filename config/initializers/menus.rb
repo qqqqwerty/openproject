@@ -91,6 +91,22 @@ Redmine::MenuManager.map :top_menu do |menu|
               (User.current.logged? || !Setting.login_required?) &&
                 User.current.allowed_to?(:view_work_packages, nil, global: true)
             }
+  menu.push :work_packages_done_as_assignee_for_user,
+            { controller: '/work_packages',
+            project_id: nil,
+            query_props: '{"f":[{"n":"status","o":"%3D","t":"list_status","v":"' +
+              WorkPackage::STATE_ID_DONE.to_s +
+              '"},{"n":"assignee","o":"%3D","t":"list_optional","v":"' +
+              User.current.used_user.to_s +
+              '"}]}'},
+            context: :work_packages,
+            caption: I18n.t('label_waiting_done_as_assignee') +
+              WorkPackage.number_as_assignee_with_state(WorkPackage::STATE_ID_DONE,
+                                            User.current.used_user).to_s,
+            if: Proc.new {
+              (User.current.logged? || !Setting.login_required?) &&
+                User.current.allowed_to?(:view_work_packages, nil, global: true)
+            }
   menu.push :work_packages_problematic_as_author_for_user,
             { controller: '/work_packages',
             project_id: nil,

@@ -1063,6 +1063,7 @@ class WorkPackage < ActiveRecord::Base
     number_as_assignee_with_state(STATE_ID_NEW, user_id) + 
       number_as_assignee_with_state(STATE_ID_IN_PROGRESS, user_id) + 
       number_as_author_with_state(STATE_ID_DONE, user_id) + 
+      number_as_assignee_with_state(STATE_ID_DONE, user_id) + 
       number_as_author_with_state([STATE_ID_STOPPED, STATE_ID_DISAPPROVED], user_id) + 
       number_as_assignee_with_state([STATE_ID_STOPPED, STATE_ID_DISAPPROVED], user_id)
   end
