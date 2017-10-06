@@ -47,6 +47,7 @@ class WorkPackage < ActiveRecord::Base
    
   STATE_ID_NEW = 1
   STATE_ID_IN_PROGRESS = 7
+  STATE_ID_ORDERED = 18
   STATE_ID_DONE = 13
   
   STATE_ID_STOPPED = 15
@@ -988,9 +989,11 @@ class WorkPackage < ActiveRecord::Base
 
     related.select(&:present?)
   end
-  #  STATE_ID_NEW = 1
+#  STATE_ID_NEW = 1
 #  STATE_ID_IN_PROGRESS = 7
+#  STATE_ID_ORDERED = 18
 #  STATE_ID_DONE = 13
+#  
 #  STATE_ID_STOPPED = 15
 #  STATE_ID_DISAPPROVED = 17
 #  
@@ -1016,7 +1019,7 @@ class WorkPackage < ActiveRecord::Base
     if self.status_id == STATE_ID_NEW
       self.warning_color = COLOR_DANGER_COLOR_ID
       self.day_before_warning = NonWorkDay.get_work_day(NUMBER_WORK_DAYS_NEW_TO_IN_PROGRESS)
-    elsif self.status_id == STATE_ID_IN_PROGRESS
+    elsif self.status_id == STATE_ID_IN_PROGRESS || self.status_id == STATE_ID_ORDERED
       self.warning_color = COLOR_WARNING_COLOR_ID
       self.day_before_warning = self.due_date
     elsif (status_before == STATE_ID_IN_PROGRESS && 
@@ -1062,6 +1065,7 @@ class WorkPackage < ActiveRecord::Base
     end
     number_as_assignee_with_state(STATE_ID_NEW, user_id) + 
       number_as_assignee_with_state(STATE_ID_IN_PROGRESS, user_id) + 
+      number_as_assignee_with_state(STATE_ID_ORDERED, user_id) + 
       number_as_author_with_state(STATE_ID_DONE, user_id) + 
       number_as_assignee_with_state(STATE_ID_DONE, user_id) + 
       number_as_author_with_state([STATE_ID_STOPPED, STATE_ID_DISAPPROVED], user_id) + 

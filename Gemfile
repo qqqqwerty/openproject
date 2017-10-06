@@ -239,7 +239,7 @@ group :development, :test do
 end
 
 # API gems
-gem 'grape', '~> 1.0'
+gem 'grape', '~> 1.0.0'
 
 gem 'reform', '~> 2.2.0'
 gem 'reform-rails', '~> 0.1.7'
