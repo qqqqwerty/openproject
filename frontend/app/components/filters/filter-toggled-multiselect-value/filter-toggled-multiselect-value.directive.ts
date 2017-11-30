@@ -97,10 +97,12 @@ export class ToggledMultiselectController {
   }
 
   private fetchAllowedValues() {
-    if ((this.filter.currentSchema!.values!.allowedValues! as CollectionResource)['$load']) {
-      this.loadAllowedValues();
-    } else {
-      this.availableOptions = (this.filter.currentSchema!.values!.allowedValues as HalResource[]);
+    if (this.filter.currentSchema!.values! != null) {
+        if ((this.filter.currentSchema!.values!.allowedValues! as CollectionResource)['$load']) {
+          this.loadAllowedValues();
+        } else {
+          this.availableOptions = (this.filter.currentSchema!.values!.allowedValues as HalResource[]);
+        }
     }
   }
 
@@ -113,7 +115,8 @@ export class ToggledMultiselectController {
     // the current user's value from the set of allowedValues. The
     // copy will have it's name altered to 'me' and will then be
     // prepended to the list.
-    let isUserResource = valuesSchema.type.indexOf('User') > 0;
+    let isUserResource = valuesSchema.type.indexOf('User') > 0 &&
+                         !(JSON.stringify(valuesSchema.allowedValues).indexOf('Transport') > 0);
     if (isUserResource) {
       loadingPromises.push(this.RootDm.load());
     }
