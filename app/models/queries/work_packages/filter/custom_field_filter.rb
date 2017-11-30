@@ -45,6 +45,8 @@ class Queries::WorkPackages::Filter::CustomFieldFilter <
       else
         custom_field.possible_values_options(project)
       end
+    when 'transport'
+        custom_field.possible_values_options_transport
     end
   end
 
@@ -56,7 +58,7 @@ class Queries::WorkPackages::Filter::CustomFieldFilter <
       :integer
     when 'text'
       :text
-    when 'list', 'user', 'version'
+    when 'list', 'user', 'version', 'transport'
       :list_optional
     when 'date'
       :date
@@ -125,6 +127,8 @@ class Queries::WorkPackages::Filter::CustomFieldFilter <
 
   def value_objects
     case custom_field.field_format
+    when 'transport'
+      User.transport.where(id: values)
     when 'user'
       User.where(id: values)
     when 'version'

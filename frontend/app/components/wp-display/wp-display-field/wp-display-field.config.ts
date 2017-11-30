@@ -57,9 +57,11 @@ openprojectModule
                                                        'Priority',
                                                        'Version',
                                                        'Category',
-                                                       'CustomOption'])
+                                                       'CustomOption',
+                                                       'Transport'])
       .addFieldType(ResourcesDisplayField, 'resources', ['[]CustomOption',
-                                                         '[]User'])
+                                                         '[]User',
+                                                         '[]Transport'])
       .addFieldType(FormattableDisplayField, 'formattable', ['Formattable'])
       .addFieldType(DurationDisplayField, 'duration', ['Duration'])
       .addFieldType(DateDisplayField, 'date', ['Date'])

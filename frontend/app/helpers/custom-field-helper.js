@@ -76,6 +76,7 @@ module.exports = function(CUSTOM_FIELD_PREFIX, I18n) {
       switch(fieldFormat) {
         case 'bool':
           return CustomFieldHelper.booleanCustomFieldValue(value);
+        case 'transport':
         case 'user':
           return CustomFieldHelper.userCustomFieldValue(value, users);
         case 'version':

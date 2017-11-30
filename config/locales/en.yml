@@ -2464,3 +2464,7 @@ en:
     label_used_user: "Peržiūrimas vartotojas"
     used_user_updated: "Peržiūrimas vartotojas sėkmingai pakeistas"
     used_user_not_found: "Vidinė klaida: pageidaujamas vartotojas nerastas"
+  activerecord:
+    attributes:
+      user:
+        transport: "Yra transportas"

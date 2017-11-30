@@ -691,7 +691,8 @@ class PermittedParams
           :mail,
           :mail_notification,
           :language,
-          :custom_fields],
+          :custom_fields,
+          :transport],
         wiki_page: [
           :title,
           :parent_id,

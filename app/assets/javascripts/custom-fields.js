@@ -98,6 +98,7 @@
           show(lengthField, regexpField);
           unsearchable();
           break;
+        case 'transport':
         case 'user':
           show(multiSelect);
           activate(multiSelect);

@@ -51,7 +51,7 @@ module CustomField::OrderStatements
       [
         select_custom_value_as_decimal
       ]
-    when 'user'
+    when 'user', 'transport'
       [
         order_by_user_sql('lastname'),
         order_by_user_sql('firstname'),

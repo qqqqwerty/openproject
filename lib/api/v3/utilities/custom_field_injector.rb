@@ -41,27 +41,31 @@ module API
           'bool' => 'Boolean',
           'user' => 'User',
           'version' => 'Version',
-          'list' => 'CustomOption'
+          'list' => 'CustomOption',
+          'transport' => 'Transport'
         }.freeze
 
-        LINK_FORMATS = ['list', 'user', 'version'].freeze
+        LINK_FORMATS = ['list', 'user', 'version', 'transport'].freeze
 
         PATH_METHOD_MAP = {
           'user' => :user,
           'version' => :version,
-          'list' => :custom_option
+          'list' => :custom_option,
+          'transport' => :user
         }.freeze
 
         NAMESPACE_MAP = {
           'user' => 'users',
           'version' => 'versions',
-          'list' => 'custom_options'
+          'list' => 'custom_options',
+          'transport' => 'users'
         }.freeze
 
         REPRESENTER_MAP = {
           'user' => Users::UserRepresenter,
           'version' => Versions::VersionRepresenter,
-          'list' => CustomOptions::CustomOptionRepresenter
+          'list' => CustomOptions::CustomOptionRepresenter,
+          'transport' => Users::UserRepresenter
         }.freeze
 
         class << self
@@ -126,6 +130,8 @@ module API
             inject_user_schema(custom_field, customized)
           when 'list'
             inject_list_schema(custom_field, customized)
+          when 'transport'
+            inject_transport_schema(custom_field, customized)
           else
             inject_basic_schema(custom_field)
           end
@@ -180,6 +186,19 @@ module API
                                           href_callback: allowed_users_href_callback(customized)
         end
 
+        def inject_transport_schema(custom_field, customized)
+          raise ArgumentError unless customized
+
+          type = custom_field.multi_value? ? "[]Transport" : "Transport"
+
+          @class.schema_with_allowed_link property_name(custom_field.id),
+                                          type: type,
+                                          writable: true,
+                                          name_source: ->(*) { custom_field.name },
+                                          required: custom_field.is_required,
+                                          href_callback: allowed_transport_users_href_callback(customized)
+        end
+        
         def inject_list_schema(custom_field, customized)
           representer = CustomOptions::CustomOptionRepresenter
           type = custom_field.multi_value ? "[]CustomOption" : "CustomOption"
@@ -340,6 +359,19 @@ module API
           }
         end
 
+        def allowed_transport_users_href_callback(customized)
+          ->(*) {
+            params = [{ status: { operator: '!',
+                                  values: [Principal::STATUSES[:builtin].to_s,
+                                           Principal::STATUSES[:locked].to_s] } },
+                      { type: { operator: '=', values: [User.transport_title.to_s] } }]
+
+            query = CGI.escape(::JSON.dump(params))
+
+            "#{api_v3_paths.principals}?filters=#{query}&pageSize=0"
+          }
+        end
+        
         def cf_min_length(custom_field)
           custom_field.min_length if custom_field.min_length > 0
         end

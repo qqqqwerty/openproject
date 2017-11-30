@@ -1,4 +1,5 @@
 #-- encoding: UTF-8
+
 #-- copyright
 # OpenProject is a project management system.
 # Copyright (C) 2012-2017 the OpenProject Foundation (OPF)
@@ -27,33 +28,38 @@
 # See doc/COPYRIGHT.rdoc for more details.
 #++
 
-class Queries::Principals::Filters::TypeFilter < Queries::Principals::Filters::PrincipalFilter
-  def allowed_values
-    [[Group.to_s, Group.to_s],
-     [User.to_s, User.to_s],
-     [User.transport_title.to_s, User.transport_title.to_s]]
-  end
+module API
+  module V3
+    module Queries
+      module Schemas
+        class TransportFilterDependencyRepresenter <
+          PrincipalFilterDependencyRepresenter
 
-  def type
-    :list
-  end
+          def json_cache_key
+            super + (filter.project.present? ? [filter.project.id] : [])
+          end
+          
+          
+          def type
+            "[]Transport"
+          end
 
-  def self.key
-    :type
-  end
+          private
 
-  def scope
-    if values.first == User.transport_title.to_s
-      if operator == '='
-        Principal.where(transport: true)
-      else
-        Principal.where.not(transport: true)
-      end
-    else
-      if operator == '='
-        Principal.where(type: values)
-      else
-        Principal.where.not(type: values)
+          def filter_query
+            params = [{ type: { operator: '=',
+                                values: ['Transport'] } },
+                      { status: { operator: '!',
+                                  values: [Principal::STATUSES[:builtin].to_s,
+                                           Principal::STATUSES[:locked].to_s] } }]
+
+            if filter.project
+              params << { member: { operator: '=', values: [filter.project.id.to_s] } }
+            end
+
+            params
+          end
+        end
       end
     end
   end

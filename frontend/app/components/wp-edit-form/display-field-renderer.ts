@@ -74,7 +74,7 @@ export class DisplayFieldRenderer {
   private getFieldForCurrentContext(workPackage:WorkPackageResourceInterface, fieldSchema:op.FieldSchema, name:string) {
 
     // We handle multi value fields differently in the single view context
-    const isMultiLinesField = ['[]CustomOption', '[]User'].indexOf(fieldSchema.type) >= 0;
+    const isMultiLinesField = ['[]CustomOption', '[]User', '[]Transport'].indexOf(fieldSchema.type) >= 0;
     if (this.context === 'single-view' && isMultiLinesField) {
       return new MultipleLinesStringObjectsDisplayField(workPackage, name, fieldSchema) as DisplayField;
     }

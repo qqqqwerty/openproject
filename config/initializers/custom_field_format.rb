@@ -69,4 +69,11 @@ OpenProject::CustomFieldFormat.map do |fields|
                                                      edit_as: 'list',
                                                      order: 9,
                                                      formatter: 'CustomValue::VersionStrategy')
+  fields.register OpenProject::CustomFieldFormat.new('transport',
+                                                     label: :label_transport,
+                                                     only: %w(WorkPackage TimeEntry
+                                                              Version Project),
+                                                     edit_as: 'list',
+                                                     order: 10,
+                                                     formatter: 'CustomValue::TransportUserStrategy')
 end

@@ -145,6 +145,8 @@ class User < Principal
     where(["#{User.table_name}.id NOT IN (SELECT gu.user_id FROM #{table_name_prefix}group_users#{table_name_suffix} gu WHERE gu.group_id = ?)", group_id])
   }
   scope :admin, -> { where(admin: true) }
+  
+  scope :transport, -> { where(transport: true) }
 
   scope :newest, -> { not_builtin.order(created_on: :desc) }
 
@@ -753,6 +755,10 @@ class User < Principal
                                   :password]))
       end
     end
+  end
+  
+  def self.transport_title
+    "Transport"
   end
 
   private

@@ -1,4 +1,5 @@
 #-- encoding: UTF-8
+
 #-- copyright
 # OpenProject is a project management system.
 # Copyright (C) 2012-2017 the OpenProject Foundation (OPF)
@@ -27,34 +28,14 @@
 # See doc/COPYRIGHT.rdoc for more details.
 #++
 
-class Queries::Principals::Filters::TypeFilter < Queries::Principals::Filters::PrincipalFilter
-  def allowed_values
-    [[Group.to_s, Group.to_s],
-     [User.to_s, User.to_s],
-     [User.transport_title.to_s, User.transport_title.to_s]]
+class CustomValue::TransportUserStrategy < CustomValue::ARObjectStrategy
+  private
+
+  def ar_class
+    User
   end
 
-  def type
-    :list
-  end
-
-  def self.key
-    :type
-  end
-
-  def scope
-    if values.first == User.transport_title.to_s
-      if operator == '='
-        Principal.where(transport: true)
-      else
-        Principal.where.not(transport: true)
-      end
-    else
-      if operator == '='
-        Principal.where(type: values)
-      else
-        Principal.where.not(type: values)
-      end
-    end
+  def ar_object(value)
+    User.find_by(id: value)
   end
 end

@@ -65,7 +65,7 @@ module API
 
           def assignable_custom_field_values(custom_field)
             case custom_field.field_format
-            when 'list'
+            when 'list', 'transport'
               custom_field.possible_values
             when 'version'
               assignable_values(:version, nil)

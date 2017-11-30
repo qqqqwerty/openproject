@@ -128,7 +128,7 @@ class CustomField < ActiveRecord::Base
 
   def possible_values_options(obj = nil)
     case field_format
-    when 'user', 'version'
+    when 'user', 'version', 'transport'
       if obj.is_a?(Project)
         possible_values_options_in_project(obj)
       elsif obj.try(:project)
@@ -152,6 +152,14 @@ class CustomField < ActiveRecord::Base
     end
   end
 
+  def possible_values_options_transport
+    case field_format
+    when 'transport'
+      User.transport.sort.map { |u| [u.to_s, u.id.to_s] }
+    else
+      []
+    end
+  end
   ##
   # Returns possible values for this custom field.
   # Options may be a customizable, or options suitable for ActiveRecord#read_attribute.
@@ -159,7 +167,7 @@ class CustomField < ActiveRecord::Base
   #        You MUST NOT pass a customizable if this CF has any other format
   def possible_values(obj = nil)
     case field_format
-    when 'user', 'version'
+    when 'user', 'version', 'transport'
       possible_values_options(obj).map(&:last)
     when 'list'
       custom_options
@@ -200,7 +208,7 @@ class CustomField < ActiveRecord::Base
         casted = value.to_i
       when 'float'
         casted = value.to_f
-      when 'user', 'version'
+      when 'user', 'version', 'transport'
         casted = (value.blank? ? nil : field_format.classify.constantize.find_by(id: value.to_i))
       end
     end
@@ -268,6 +276,8 @@ class CustomField < ActiveRecord::Base
 
   def possible_values_options_in_project(project)
     case field_format
+    when 'transport'
+      User.transport
     when 'user'
       project.users
     when 'version'

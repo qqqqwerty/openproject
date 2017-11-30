@@ -87,7 +87,7 @@ module API
               'API::V3::Queries::Schemas::CustomOptionFilterDependencyRepresenter'
             when 'bool'
               'API::V3::Queries::Schemas::BooleanFilterDependencyRepresenter'
-            when 'user', 'version', 'float'
+            when 'user', 'version', 'float', 'transport'
               "API::V3::Queries::Schemas::#{format.camelize}FilterDependencyRepresenter"
             when 'string'
               'API::V3::Queries::Schemas::TextFilterDependencyRepresenter'

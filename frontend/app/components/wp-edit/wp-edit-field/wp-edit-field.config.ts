@@ -54,10 +54,12 @@ openprojectModule
         'Version',
         'Category',
         'CustomOption',
-        'Project'])
+        'Project',
+        'Transport'])
       .addFieldType(MultiSelectEditField, 'multi-select', [
         '[]CustomOption',
-        '[]User'
+        '[]User',
+        '[]Transport'
       ])
       .addFieldType(FloatEditField, 'float', ['Float'])
       .addFieldType(WorkPackageEditField, 'workPackage', ['WorkPackage'])
