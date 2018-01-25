@@ -99,7 +99,7 @@ var fileFieldCount = 1;
 
 function addFileField() {
   fileFieldCount++;
-  if (fileFieldCount >= 10) return false;
+  if (fileFieldCount > 10) return false;
   var clone = jQuery('#attachment_template').clone(true);
   clone.removeAttr('id');
   clone.html(clone.html().replace(/\[1\]/g, '['+ fileFieldCount + ']'));
