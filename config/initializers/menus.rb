@@ -75,6 +75,22 @@ Redmine::MenuManager.map :top_menu do |menu|
               (User.current.logged? || !Setting.login_required?) &&
                 User.current.allowed_to?(:view_work_packages, nil, global: true)
             }
+  menu.push :work_packages_in_progress_as_author,
+            { controller: '/work_packages',
+            project_id: nil,
+            query_props: '{"f":[{"n":"status","o":"%3D","t":"list_status","v":"' +
+              WorkPackage::STATE_ID_IN_PROGRESS.to_s +
+              '"},{"n":"author","o":"%3D","t":"list_optional","v":"' +
+              User.current.used_user.to_s +
+              '"}]}'},
+            context: :work_packages,
+            caption: I18n.t('label_waiting_in_progress_author_me') +
+              WorkPackage.number_as_author_with_state(WorkPackage::STATE_ID_IN_PROGRESS,
+                                            User.current.used_user).to_s,
+            if: Proc.new {
+              (User.current.logged? || !Setting.login_required?) &&
+                User.current.allowed_to?(:view_work_packages, nil, global: true)
+            }
   menu.push :work_packages_ordered_for_user,
             { controller: '/work_packages',
             project_id: nil,

@@ -2447,6 +2447,7 @@ en:
   label_project_has_problems_state: "Problemiškas"
   label_waiting_new: "Nauji: "
   label_waiting_in_progress: "Vykdomi: "
+  label_waiting_in_progress_author_me: "Mano sukurti vykdomi: "
   label_waiting_ordered: "Užsakyti: "
   label_waiting_done: "Įvykdyti: "
   label_waiting_done_as_assignee: "Aš įvykdžiau: "
