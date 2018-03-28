@@ -43,6 +43,7 @@ class ApplicationController < ActionController::Base
   include Redmine::I18n
   include HookHelper
   include ::OpenProject::Authentication::SessionExpiry
+  include AdditionalUrlHelpers
 
   layout 'base'
 
@@ -443,7 +444,7 @@ class ApplicationController < ActionController::Base
       params[:back_url],
       hostname: request.host,
       default: default,
-      return_escaped: use_escaped,
+      return_escaped: use_escaped
     )
 
     redirect_to policy.redirect_url
