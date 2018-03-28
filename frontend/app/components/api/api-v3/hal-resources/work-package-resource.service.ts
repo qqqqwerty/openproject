@@ -298,7 +298,7 @@ export class WorkPackageResource extends HalResource {
 
     const promise = $q.all(resources);
     promise.then(() => {
-      wpCacheService.updateWorkPackage(this as any);
+      wpCacheService.touch(this.id);
     });
 
     return promise;

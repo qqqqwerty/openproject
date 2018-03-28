@@ -29,15 +29,67 @@
 require 'spec_helper'
 
 describe AccountController, type: :controller do
-  render_views
-
   after do
     User.delete_all
     User.current = nil
   end
+  let(:user) { FactoryGirl.build_stubbed(:user) }
+
+  context 'GET #login' do
+    let(:setup) {}
+    let(:params) { {} }
+
+    before do
+      setup
+
+      get :login, params: params
+    end
+
+    it 'renders the view' do
+      expect(response).to render_template 'login'
+      expect(response).to be_success
+    end
+
+    context 'user already logged in' do
+      let(:setup) { login_as user }
+
+      it 'redirects to home' do
+        expect(response)
+          .to redirect_to my_page_path
+      end
+    end
+
+    context 'user already logged in and back url present' do
+      let(:setup) { login_as user }
+      let(:params) { { back_url: "/projects" } }
+
+      it 'redirects to back_url value' do
+        expect(response)
+          .to redirect_to projects_path
+      end
+    end
+
+    context 'user already logged in and invalid back url present' do
+      let(:setup) { login_as user }
+      let(:params) { { back_url: 'http://test.foo/work_packages/show/1' } }
+
+      it 'redirects to home' do
+        expect(response).to redirect_to my_page_path
+      end
+    end
+  end
 
   context 'POST #login' do
     let(:admin) { FactoryGirl.create(:admin) }
+
+    describe 'wrong password' do
+      it 'redirects back to login' do
+        post :login, params: { username: 'admin', password: 'bad' }
+        expect(response).to be_success
+        expect(response).to render_template 'login'
+        expect(flash[:error]).to include 'Invalid user or password'
+      end
+    end
 
     describe 'User logging in with back_url' do
       it 'should redirect to a relative path' do
@@ -173,6 +225,18 @@ describe AccountController, type: :controller do
                }
           expect(response).to redirect_to my_page_path
         end
+      end
+    end
+
+    context 'GET #logout' do
+      let(:admin) { FactoryGirl.create(:admin) }
+
+      it 'calls reset_session' do
+        expect(@controller).to receive(:reset_session).once
+
+        login_as admin
+        get :logout
+        expect(response).to be_redirect
       end
     end
 
@@ -325,7 +389,7 @@ describe AccountController, type: :controller do
     end
 
     context 'with self registration off but an ongoing invitation activation' do
-      let(:token) { FactoryGirl.create :token }
+      let(:token) { FactoryGirl.create :invitation_token }
 
       before do
         allow(Setting).to receive(:self_registration).and_return('0')
@@ -401,7 +465,7 @@ describe AccountController, type: :controller do
 
       context 'with password login enabled' do
         before do
-          Token.delete_all
+          Token::Invitation.delete_all
           post :register,
                params: {
                  user: {
@@ -421,8 +485,7 @@ describe AccountController, type: :controller do
 
         it "doesn't activate the user but sends out a token instead" do
           expect(User.find_by_login('register')).not_to be_active
-          token = Token.first
-          expect(token.action).to eq('register')
+          token = Token::Invitation.last
           expect(token.user.mail).to eq('register@example.com')
           expect(token).not_to be_expired
         end
@@ -580,6 +643,8 @@ describe AccountController, type: :controller do
   end
 
   describe 'GET #auth_source_sso_failed (/sso)' do
+   render_views
+
     let(:failure) do
       {
         user: user,

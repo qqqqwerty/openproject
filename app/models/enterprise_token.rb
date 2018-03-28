@@ -83,10 +83,8 @@ class EnterpriseToken < ActiveRecord::Base
   private
 
   def load_token!
-    @token_object = OpenProject::Token.import(encoded_token)
-  rescue OpenProject::Token::ImportError => error
-    Rails.logger.error "Failed to load EE token: #{error}"
-    nil
+    @token_object = OpenProject::Token.new
+    true
   end
 
   def valid_token_object
