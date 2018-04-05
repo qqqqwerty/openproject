@@ -1,0 +1,21 @@
+<div ng-if="$ctrl.workPackage" class="work-package--project-context-view">
+
+  <div class="attributes-group -project-context" ng-if="$ctrl.projectContext.field">
+    <div class="">
+      <p ng-hide="$ctrl.projectContext.href" ng-bind="::$ctrl.text.project.required"></p>
+      <div class="attributes-key-value"
+           ng-class="{'-span-all-columns': descriptor.spanAll }"
+           ng-repeat="descriptor in $ctrl.projectContext.field track by descriptor.name">
+        <div class="attributes-key-value--key"
+             wp-replacement-label="descriptor.name">
+          {{ descriptor.label }}
+          <span class="required" ng-if="descriptor.field.required && descriptor.field.writable"> *</span>
+          <attribute-help-text title-text="descriptor.label" attribute="descriptor.name" attribute-scope="WorkPackage"></attribute-help-text>
+        </div>
+        <div class="attributes-key-value--value-container">
+          <wp-edit-field work-package-id="$ctrl.workPackage.id" field-name="descriptor.name"></wp-edit-field>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><br>

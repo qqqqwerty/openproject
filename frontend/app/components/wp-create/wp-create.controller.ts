@@ -39,6 +39,7 @@ import {WorkPackageEditingService} from '../wp-edit-form/work-package-editing-se
 import {WorkPackageChangeset} from '../wp-edit-form/work-package-changeset';
 import {WorkPackageFilterValues} from '../wp-edit-form/work-package-filter-values';
 import {WorkPackageTableFiltersService} from '../wp-fast-table/state/wp-table-filters.service';
+import {ResponsiveView} from '../responsive/responsive-view.service';
 
 export class WorkPackageCreateController {
   public newWorkPackage:WorkPackageResourceInterface;
@@ -58,7 +59,8 @@ export class WorkPackageCreateController {
               protected wpCacheService:WorkPackageCacheService,
               protected v3Path:any,
               protected $location:ng.ILocationService,
-              protected RootDm:RootDmService) {
+              protected RootDm:RootDmService,
+              protected responsiveView:ResponsiveView) {
 
     this.newWorkPackageFromParams($state.params)
       .then((changeset:WorkPackageChangeset) => {
@@ -103,6 +105,10 @@ export class WorkPackageCreateController {
 
   public $onInit() {
     // Created for interface compliance
+    // to have more comfortable mobile view
+    if(this.responsiveView.isSmall()){
+      this.switchToFullscreen();
+    }
   }
 
   public switchToFullscreen() {

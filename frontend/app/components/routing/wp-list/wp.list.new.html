@@ -11,14 +11,15 @@
            wp-edit-form="$ctrl.newWorkPackage"
            wp-edit-form-on-save="$ctrl.refreshAfterSave(workPackage, 'work-packages.list.details.overview')">
         <div class="work-packages--new-details-header">
-          <wp-type-status work-package="$ctrl.newWorkPackage"></wp-type-status>
           <div class="hidden-for-accessibility wp--details--switch-fullscreen-wrapper">
              <a ng-click="$ctrl.switchToFullscreen()" class="work-packages-show-view-button wp--details--switch-fullscreen ">
                <span class="icon-context icon-to-fullscreen"></span>
              </a>
           </div>
         </div>
-          <wp-single-view work-package="$ctrl.newWorkPackage"></wp-single-view>
+        <wp-project-context-view work-package="$ctrl.newWorkPackage"></wp-project-context-view>
+        <wp-type-status work-package="$ctrl.newWorkPackage"></wp-type-status>
+        <wp-single-view work-package="$ctrl.newWorkPackage"></wp-single-view>
       </div>
     </div>
 
