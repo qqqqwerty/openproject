@@ -50,6 +50,7 @@ class WorkPackage < ActiveRecord::Base
   STATE_ID_DONE = 13
   
   STATE_ID_STOPPED = 15
+  STATE_ID_APPROVED = 16
   STATE_ID_DISAPPROVED = 17
   
   COLOR_NO_COLOR_ID = 0
@@ -785,26 +786,36 @@ class WorkPackage < ActiveRecord::Base
     end
   end
   
-  def self.number_as_author_with_state(status_ids, user_id = nil)
+  def self.number_as_author_with_state(status_ids, user_id = nil, negative = false)
     if user_id == nil || !user_id.is_a?(Integer)
       user_id = User.current.id
     end
     if !User.current.admin?
       user_id = User.current.id
     end
-    number = WorkPackage.visible.where("author_id = :user_id AND status_id IN(:status_ids)",
-      {user_id: user_id, status_ids: status_ids}).count
+    if negative
+      number = WorkPackage.visible.where("author_id = :user_id AND status_id NOT IN(:status_ids)",
+        {user_id: user_id, status_ids: status_ids}).count
+    else
+      number = WorkPackage.visible.where("author_id = :user_id AND status_id IN(:status_ids)",
+        {user_id: user_id, status_ids: status_ids}).count
+    end
   end
   
-  def self.number_as_assignee_with_state(status_ids, user_id = nil)
+  def self.number_as_assignee_with_state(status_ids, user_id = nil, negative = false)
     if user_id == nil || !user_id.is_a?(Integer)
       user_id = User.current.id
     end
     if !User.current.admin?
       user_id = User.current.id
     end
-    number = WorkPackage.visible.where("assigned_to_id = :user_id AND status_id IN(:status_ids)",
-      {user_id: user_id, status_ids: status_ids}).count
+    if negative
+      number = WorkPackage.visible.where("assigned_to_id = :user_id AND status_id NOT IN(:status_ids)",
+        {user_id: user_id, status_ids: status_ids}).count
+    else
+      number = WorkPackage.visible.where("assigned_to_id = :user_id AND status_id IN(:status_ids)",
+        {user_id: user_id, status_ids: status_ids}).count
+    end
   end
   
   def self.number_needs_attention(user_id = nil)
@@ -814,13 +825,7 @@ class WorkPackage < ActiveRecord::Base
     if !User.current.admin?
       user_id = User.current.id
     end
-    number_as_assignee_with_state(STATE_ID_NEW, user_id) + 
-      number_as_assignee_with_state(STATE_ID_IN_PROGRESS, user_id) + 
-      number_as_author_with_state(STATE_ID_IN_PROGRESS, user_id) + 
-      number_as_assignee_with_state(STATE_ID_ORDERED, user_id) + 
-      number_as_author_with_state(STATE_ID_DONE, user_id) + 
-      number_as_assignee_with_state(STATE_ID_DONE, user_id) + 
-      number_as_author_with_state([STATE_ID_STOPPED, STATE_ID_DISAPPROVED], user_id) + 
-      number_as_assignee_with_state([STATE_ID_STOPPED, STATE_ID_DISAPPROVED], user_id)
+    number_as_author_with_state(STATE_ID_APPROVED, user_id, true)+
+      number_as_assignee_with_state(STATE_ID_APPROVED,user_id, true)
   end
 end
