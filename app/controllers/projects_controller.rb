@@ -35,17 +35,17 @@ class ProjectsController < ApplicationController
   helper :timelines
 
   before_action :disable_api
-  before_action :find_project, except: [:index, :level_list, :new, :create]
+  before_action :find_project, except: [:index, :level_list, :new, :create, :un_archive_selected]
   before_action :authorize, only: [
     :show, :settings, :edit, :update, :modules, :types, :custom_fields
   ]
   before_action :authorize_global, only: [:new, :create]
-  before_action :require_admin, only: [:archive, :unarchive, :destroy, :destroy_info]
+  before_action :require_admin, only: [:archive, :unarchive, :destroy, :destroy_info, :un_archive_selected]
   before_action :jump_to_project_menu_item, only: :show
   before_action :load_project_settings, only: :settings
   before_action :determine_base
 
-  accept_key_auth :index, :level_list, :show, :create, :update, :destroy
+  accept_key_auth :index, :level_list, :show, :create, :update, :destroy, :un_archive_selected
 
   include SortHelper
   include PaginationHelper
@@ -227,12 +227,49 @@ class ProjectsController < ApplicationController
     flash[:error] = l(:error_can_not_archive_project) unless @project.archive
     redirect_to(url_for(controller: '/projects', action: 'index', status: params[:status]))
   end
+  
+  def un_archive_selected
+    flash[:error] = l(:error_can_not_un_archive_projects)
+    errors_count = 0
+    affected_count = 0
+    total_count = 0
+    params[:projects].each do |project_id|
+      project = Project.find_by id: project_id.to_i
+      if project
+        total_count = total_count + 1
+      end
+      if params[:archive] == 'true'
+        if !project.archived?
+          unless project.archive
+            flash[:error] = flash[:error] + project.name + ', '
+            errors_count = errors_count + 1
+          else
+            affected_count = affected_count + 1
+          end
+        end
+      else
+        if project.archived?
+          unless project.unarchive
+            flash[:error] = flash[:error] + project.name + ', '
+            errors_count = errors_count + 1 
+          else
+            affected_count = affected_count + 1
+          end
+        end
+      end
+    end
+    if errors_count == 0
+      flash.clear
+      flash[:notice] = l(:notice_no_projects_affected, affected: affected_count, total: total_count)
+    end
+    redirect_to(url_for(controller: '/projects', action: 'index', status: params[:status]))
+  end
 
   def unarchive
     @project.unarchive if !@project.active?
     redirect_to(url_for(controller: '/projects', action: 'index', status: params[:status]))
   end
-
+  
   # Delete @project
   def destroy
     @project_to_destroy = @project

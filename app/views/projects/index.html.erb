@@ -60,6 +60,12 @@ See doc/COPYRIGHT.rdoc for more details.
 <% if @projects.any? %>
   <div class="generic-table--container">
     <div class="generic-table--results-container">
+      <%= form_tag('/projects/un_archive_selected') do %>
+      <% if User.current.admin? %>
+        <%= link_to_function(icon_wrapper('icon-context icon-checkmark',"#{l(:button_check_all)}/#{l(:button_uncheck_all)}"), 'toggleCheckboxesBySelector("input[name*=\"projects[]\"")',
+                                                          class: 'no-decoration-on-hover',
+                                                          title: "#{l(:button_check_all)}/#{l(:button_uncheck_all)}") %>
+      <% end %>
       <table class="generic-table" id="project-table">
         <thead>
           <tr>
@@ -92,7 +98,9 @@ See doc/COPYRIGHT.rdoc for more details.
         <tbody>
           <% projects_with_levels_order_sensitive(@projects) do |project, level| %>
             <tr class="basics context-menu--reveal <%= project_css_classes(project) %> <%= level > 0 ? "idnt idnt-#{level}" : nil %> <%= params[:expand] == 'all' && project.short_description.present? ? '-no-highlighting -expanded' : '' %>">
-              <td></td>
+              <td><% if User.current.admin? %>
+                    <%= check_box_tag "projects[]", project.id %>
+                  <% end %> </td>
               <td class="name project--hierarchy <%= project.archived? ? 'archived' : '' %>">
                 <i class="projects-table--hierarchy-icon"></i>
                 <% if project.archived? %>
@@ -154,6 +162,15 @@ See doc/COPYRIGHT.rdoc for more details.
           <% end %>
         </tbody>
       </table>
+        <% if User.current.admin? %>
+          <%= label_tag(:action_archive_projects, t('projects.bulk_actions.action_with_selected')) %>
+          <%= radio_button_tag(:archive, true) %>
+          <%= label_tag(:archive_projects, t('projects.bulk_actions.archive')) %>
+          <%= radio_button_tag(:archive, false, checked = true) %>
+          <%= label_tag(:unarchive_projects, t('projects.bulk_actions.unarchive')) %>
+          <%= submit_tag t('projects.bulk_actions.do_the_action'), data: { confirm: l(:text_are_you_sure) } %>
+         <% end %>
+      <% end %>
     </div>
   </div>
   <%= pagination_links_full @projects %>

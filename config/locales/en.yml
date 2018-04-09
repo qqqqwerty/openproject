@@ -2486,3 +2486,11 @@ en:
     attributes:
       user:
         transport: "Yra transportas"
+  projects:
+    bulk_actions:
+      action_with_selected: "Veiksmas su pažymėtais:"
+      archive: "Archyvavimas"
+      unarchive: "Išarchyvavimas"
+      do_the_action: "Atlikti veiksmą"
+  error_can_not_un_archive_projects: "Nepavyko su/išarchyvuoti projektų: "
+  notice_no_projects_affected: "Tiesiogiai paveikta %{affected} projekt. iš pažymėtų %{total}."

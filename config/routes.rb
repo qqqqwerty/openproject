@@ -89,7 +89,7 @@ OpenProject::Application.routes.draw do
         resources :statuses, only: [:index, :show]
         resources :versions, only: [:index]
         resources :users, only: [:index]
-
+        
         member do
           get :planning_element_custom_fields
         end
@@ -212,6 +212,7 @@ OpenProject::Application.routes.draw do
 
       # Destroy uses a get request to prompt the user before the actual DELETE request
       get :destroy_info, as: 'confirm_destroy'
+      
     end
 
     resource :enumerations, controller: 'project_enumerations', only: [:update, :destroy]
@@ -360,6 +361,9 @@ OpenProject::Application.routes.draw do
                                        format: 'html',
                                        constraints: { rev: /[\w0-9\.\-_]+/, path: /.*/ },
                                        as: 'show_revisions_path'
+    end
+    collection do
+      post :un_archive_selected
     end
   end
 
