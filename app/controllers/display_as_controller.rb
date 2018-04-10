@@ -28,10 +28,10 @@ class DisplayAsController < ApplicationController
     if target_user != nil && !target_user.blank?
       User.current.update_attribute('used_user', user_id)
       flash[:notice] = t(:'display_as.used_user_updated')
-      redirect_to action: 'index'
+      redirect_to display_as_path
     else
       flash[:error] = t(:'display_as.used_user_not_found')
-      redirect_to action: 'new'
+      redirect_to new_display_a_path
     end
   end
 

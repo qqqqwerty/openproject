@@ -1,8 +1,8 @@
 <%= error_messages_for 'display_as' %>
-<%= form_tag 'display_as' do %>
+<%= form_tag '/display_as' do %>
   <%= select_tag(:user_id, options_for_select(users, user_id)) %><br>
 
   <div><%= submit_tag l(:button_save), class: 'button -highlight -with-icon icon-checkmark' %>
-  <%= link_to l(:button_cancel), 'display_as', class: 'button' %></div>
+  <%= link_to l(:button_cancel), '/display_as/index', class: 'button' %></div>
 
 <% end %>
