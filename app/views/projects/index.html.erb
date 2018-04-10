@@ -106,7 +106,7 @@ See doc/COPYRIGHT.rdoc for more details.
                 <% if project.archived? %>
                   <span class="archived-label"><%= t('project.archive.archived') %></span>
                 <% end %>
-                <%= link_to_project(project, {}, {}, true) %>
+                <%= link_to_project(project, {}, {title: project.name}, true) %>
               </td>
               <td><%= checked_image project.is_public? %></td>
               <% if EnterpriseToken.allows_to?(:custom_fields_in_projects_list) %>

@@ -121,6 +121,7 @@ export class ProjectMenuAutocompleteController extends ILazyAutocompleterBridge<
   public renderItem(item:ProjectAutocompleteItem, div:JQuery):void {
     const link = jQuery('<a>')
       .attr('href', this.projectLink(item.object.identifier))
+      .attr('title', item.label)
       .text(item.label)
       .appendTo(div);
 
