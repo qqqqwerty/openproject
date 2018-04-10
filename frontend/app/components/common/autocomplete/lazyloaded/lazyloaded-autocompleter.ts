@@ -90,7 +90,7 @@ export abstract class ILazyAutocompleterBridge<T> {
     const options = {
       shouldSort: true,
       tokenize: false,
-      threshold: 0.2,
+      threshold: 0.6,
       location: 0,
       distance: 100,
       maxPatternLength: 16,
