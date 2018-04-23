@@ -101,7 +101,7 @@ See doc/COPYRIGHT.rdoc for more details.
               <td><% if User.current.admin? %>
                     <%= check_box_tag "projects[]", project.id %>
                   <% end %> </td>
-              <td class="name project--hierarchy <%= project.archived? ? 'archived' : '' %>">
+              <td class="name project--hierarchy <%= project.archived? ? 'archived' : '' %>" title="<%= project.name %>">
                 <i class="projects-table--hierarchy-icon"></i>
                 <% if project.archived? %>
                   <span class="archived-label"><%= t('project.archive.archived') %></span>

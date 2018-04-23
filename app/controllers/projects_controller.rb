@@ -233,27 +233,29 @@ class ProjectsController < ApplicationController
     errors_count = 0
     affected_count = 0
     total_count = 0
-    params[:projects].each do |project_id|
-      project = Project.find_by id: project_id.to_i
-      if project
-        total_count = total_count + 1
-      end
-      if params[:archive] == 'true'
-        if !project.archived?
-          unless project.archive
-            flash[:error] = flash[:error] + project.name + ', '
-            errors_count = errors_count + 1
-          else
-            affected_count = affected_count + 1
-          end
+    if !params[:projects].nil?
+      params[:projects].each do |project_id|
+        project = Project.find_by id: project_id.to_i
+        if project
+          total_count = total_count + 1
         end
-      else
-        if project.archived?
-          unless project.unarchive
-            flash[:error] = flash[:error] + project.name + ', '
-            errors_count = errors_count + 1 
-          else
-            affected_count = affected_count + 1
+        if params[:archive] == 'true'
+          if !project.archived?
+            unless project.archive
+              flash[:error] = flash[:error] + project.name + ', '
+              errors_count = errors_count + 1
+            else
+              affected_count = affected_count + 1
+            end
+          end
+        else
+          if project.archived?
+            unless project.unarchive
+              flash[:error] = flash[:error] + project.name + ', '
+              errors_count = errors_count + 1 
+            else
+              affected_count = affected_count + 1
+            end
           end
         end
       end
