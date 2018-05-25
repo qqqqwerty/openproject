@@ -184,7 +184,6 @@ module API
 
           schema_with_allowed_link :assignee,
                                    type: 'User',
-                                   required: false,
                                    href_callback: ->(*) {
                                      if represented.project
                                        api_v3_paths.available_assignees(represented.project_id)
