@@ -763,26 +763,25 @@ class WorkPackage < ActiveRecord::Base
       if work_package_obj != nil
         status_before = work_package_obj.status_id
       else
-        status_before = STATE_ID_NEW
+        status_before = -1
       end
     else
-      status_before = STATE_ID_NEW
+      status_before = -1
     end
-    if self.status_id == STATE_ID_NEW
-      self.warning_color = COLOR_DANGER_COLOR_ID
-      self.day_before_warning = NonWorkDay.get_work_day(NUMBER_WORK_DAYS_NEW_TO_IN_PROGRESS)
-    elsif self.status_id == STATE_ID_IN_PROGRESS || self.status_id == STATE_ID_ORDERED
-      self.warning_color = COLOR_WARNING_COLOR_ID
-      self.day_before_warning = self.due_date
-    elsif (status_before == STATE_ID_IN_PROGRESS && 
-          self.status_id == STATE_ID_DONE)
-      self.warning_color = COLOR_INFORMATION_COLOR_ID
-      self.day_before_warning = NonWorkDay.get_work_day(NUMBER_WORK_DAYS_DONE_TO_DIS_APPROVED)
-    elsif (self.status_id != STATE_ID_NEW && 
-          self.status_id != STATE_ID_IN_PROGRESS && 
-          self.status_id != STATE_ID_DONE)
-      self.warning_color = COLOR_NO_COLOR_ID
-      self.day_before_warning = self.due_date
+    if self.status_id != status_before
+      if self.status_id == STATE_ID_NEW
+        self.warning_color = COLOR_DANGER_COLOR_ID
+        self.day_before_warning = NonWorkDay.get_work_day(NUMBER_WORK_DAYS_NEW_TO_IN_PROGRESS)
+      elsif self.status_id == STATE_ID_IN_PROGRESS || self.status_id == STATE_ID_ORDERED
+        self.warning_color = COLOR_WARNING_COLOR_ID
+        self.day_before_warning = self.due_date
+      elsif self.status_id == STATE_ID_DONE
+        self.warning_color = COLOR_INFORMATION_COLOR_ID
+        self.day_before_warning = NonWorkDay.get_work_day(NUMBER_WORK_DAYS_DONE_TO_DIS_APPROVED)
+      else
+        self.warning_color = COLOR_NO_COLOR_ID
+        self.day_before_warning = self.due_date
+      end
     end
   end
   
