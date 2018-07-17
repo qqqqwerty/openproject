@@ -15,15 +15,6 @@ GIT
       rails (~> 5.0.0)
 
 GIT
-  remote: https://github.com/finnlabs/openproject-local_avatars.git
-  revision: ff690766f6cae16e62ca22f3fe3c01b51781d715
-  branch: stable/7
-  specs:
-    openproject-local_avatars (7.3.2)
-      rails (~> 5.0)
-      rmagick (~> 2.15.4)
-
-GIT
   remote: https://github.com/finnlabs/openproject-my_project_page.git
   revision: 692dcd8fce7872e20dd36bccaa7b48bddc3c4ce8
   branch: stable/7
@@ -100,6 +91,16 @@ GIT
       rack (>= 1.6.2, < 3)
 
 GIT
+  remote: https://github.com/opf/openproject-avatars.git
+  revision: 54a32c59aa885416c4ebb6a83b066155c774aaae
+  branch: stable/7
+  specs:
+    openproject-avatars (7.4.6)
+      fastimage (~> 2.1.0)
+      gravatar_image_tag (~> 1.2.0)
+      rails (~> 5.0)
+
+GIT
   remote: https://github.com/opf/openproject-translations.git
   revision: 52a08551cf5562f14b2eeadb31bcb64bafd303a2
   branch: translations-in-core
@@ -119,22 +120,22 @@ GIT
       rails (>= 5.0.0, < 5.1)
 
 GIT
-  remote: https://github.com/qqqwerty/openproject-reporting.git
-  revision: 3e94a7a5821b64f3fce577640a580b53024d0beb
+  remote: https://github.com/qqqqwerty/openproject-reporting.git
+  revision: 087d8d5a9a9ca37c0aad27ca9b70855286fbc585
   branch: stable/7
   specs:
-    openproject-reporting (7.4.1)
+    openproject-reporting (7.4.3)
       jquery-tablesorter (~> 1.22.3)
-      openproject-costs (= 7.4.1)
+      openproject-costs (= 7.4.3)
       rails (~> 5.0.0)
       reporting_engine (>= 1.1.0)
 
 GIT
-  remote: https://github.com/qqqwerty/reporting_engine.git
-  revision: 7ae0aa7f173122945d08ff9574e06e7a8a279bb0
+  remote: https://github.com/qqqqwerty/reporting_engine.git
+  revision: 86875cf54415287407f6a4994bcdf8949b45a303
   branch: stable/7
   specs:
-    reporting_engine (7.4.1)
+    reporting_engine (7.4.3)
       json
       rails (~> 5.0.0)
 
@@ -150,19 +151,19 @@ GIT
 PATH
   remote: vendored-plugins/openproject-costs
   specs:
-    openproject-costs (7.4.1)
+    openproject-costs (7.4.3)
       rails (~> 5.0.0)
 
 PATH
   remote: vendored-plugins/openproject-documents
   specs:
-    openproject-documents (7.4.1)
+    openproject-documents (7.4.3)
       rails (~> 5.0.0)
 
 PATH
   remote: vendored-plugins/openproject-meeting
   specs:
-    openproject-meeting (7.4.1)
+    openproject-meeting (7.4.3)
       icalendar (~> 2.3.0)
       rails (~> 5.0.0)
 
@@ -366,6 +367,7 @@ GEM
       railties (>= 3.0.0)
     faker (1.8.7)
       i18n (>= 0.7)
+    fastimage (2.1.3)
     ffi (1.9.23)
     fog-aws (2.0.1)
       fog-core (~> 1.38)
@@ -403,6 +405,7 @@ GEM
       rack (>= 1.3.0)
       rack-accept
       virtus (>= 1.0.0)
+    gravatar_image_tag (1.2.0)
     hashdiff (0.3.7)
     hashery (2.1.2)
     hashie (3.5.7)
@@ -585,7 +588,6 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     retriable (3.1.1)
-    rmagick (2.15.4)
     roar (1.1.0)
       representable (~> 3.0.0)
     rspec (3.5.0)
@@ -773,10 +775,10 @@ DEPENDENCIES
   oj (~> 3.3.2)
   okcomputer (~> 1.16.0)
   omniauth!
+  openproject-avatars!
   openproject-costs!
   openproject-documents!
   openproject-global_roles!
-  openproject-local_avatars!
   openproject-meeting!
   openproject-my_project_page!
   openproject-pdf_export!
