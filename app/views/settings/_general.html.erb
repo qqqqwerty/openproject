@@ -69,6 +69,15 @@ See doc/COPYRIGHT.rdoc for more details.
       <div class="form--field"><%= setting_check_box :welcome_on_homescreen %></div>
       <div class="form--field"><%= setting_check_box :welcome_on_projects_page %></div>
     </fieldset>
+    <fieldset class="form--fieldset">
+      <legend class="form--fieldset-legend"><%= t(:setting_login_welcome_text) %></legend>
+      <div class="form--field"><%= setting_text_field :login_welcome_title, size: 30, container_class: '-wide' %></div>
+      <div class="form--field">
+        <%= setting_text_area :login_welcome_text, cols: 60, rows: 5, class: 'wiki-edit', container_class: '-wide' %>
+        <%= wikitoolbar_for 'settings_login_welcome_text' %>
+      </div>
+      <div class="form--field"><%= setting_check_box :login_welcome_on_homescreen %></div>
+    </fieldset>
   </section>
   <%= styled_button_tag t(:button_save), class: '-highlight -with-icon icon-checkmark' %>
 <% end %>
