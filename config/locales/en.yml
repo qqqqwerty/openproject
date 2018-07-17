@@ -2494,3 +2494,6 @@ en:
       do_the_action: "Atlikti veiksmą"
   error_can_not_un_archive_projects: "Nepavyko su/išarchyvuoti projektų: "
   notice_no_projects_affected: "Tiesiogiai paveikta %{affected} projekt. iš pažymėtų %{total}."
+  setting_login_welcome_title: "Prisijungusių vartotojų pasisveikinimo bloko pavadinimas"
+  setting_login_welcome_text: "Prisijungusių vartotojų pasisveikinimo bloko tekstas"
+  setting_login_welcome_on_homescreen: "Rodyti prisijungusių vartotojų pasisveikinimo bloką namų lange"
