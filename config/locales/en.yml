@@ -2497,3 +2497,7 @@ en:
   setting_login_welcome_title: "Prisijungusių vartotojų pasisveikinimo bloko pavadinimas"
   setting_login_welcome_text: "Prisijungusių vartotojų pasisveikinimo bloko tekstas"
   setting_login_welcome_on_homescreen: "Rodyti prisijungusių vartotojų pasisveikinimo bloką namų lange"
+  label_new_project_plural: "Rolė projektams"
+  description_choose_role: "Pasirinkite rolę"
+  label_assign_roles_for_project: "Rolės priskyrimas projektams"
+  label_new_projects: "Projektai"

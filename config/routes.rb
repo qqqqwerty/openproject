@@ -402,9 +402,11 @@ OpenProject::Application.routes.draw do
         match '/memberships/:membership_id' => 'groups#edit_membership', via: :put, as: 'membership_of'
         match '/memberships/:membership_id' => 'groups#destroy_membership', via: :delete
         match '/memberships' => 'groups#create_memberships', via: :post, as: 'memberships_of'
+        match '/memberships_single_role' => 'groups#create_new_memberships_with_single_role', via: :post, as: 'memberships_of_single_role'
+        match '/memberships_single_role/:membership_id' => 'groups#new_destroy_membership', via: :delete, as: 'membership_of_single_role'
       end
     end
-
+    
     resources :roles, only: [:index, :new, :create, :edit, :update, :destroy] do
       collection do
         put '/' => 'roles#bulk_update'

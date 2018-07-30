@@ -855,7 +855,7 @@ class Project < ActiveRecord::Base
     end
     update_attribute :status, STATUS_ARCHIVED
   end
-
+  
   protected
 
   def self.possible_principles_condition
