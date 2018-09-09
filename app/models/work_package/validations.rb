@@ -34,7 +34,7 @@ module WorkPackage::Validations
   MATERIAL_ORDER_TYPE_ID = 10
 
   included do
-    validates_presence_of :subject, :priority, :project, :type, :author, :status
+    validates_presence_of :subject, :priority, :project, :type, :author, :status#, :assigned_to
 
     validates_length_of :subject, maximum: 255
     validates_inclusion_of :done_ratio, in: 0..100
