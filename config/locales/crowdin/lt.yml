@@ -1399,7 +1399,7 @@ lt:
   label_project_default_type: Leisti tuščią tipą
   label_project_hierarchy: Projekto hierarchija
   label_project_new: Naujas projektas
-  label_project_plural: Projektai
+  label_project_plural: Rolės projektui
   label_project_settings: Projekto nustatymai
   label_projects_storage_information: "%{count} projektai(-as, -ų) naudoja %{storage}
     disko vietos"

@@ -92,10 +92,17 @@ GIT
 
 GIT
   remote: https://github.com/opf/openproject-avatars.git
+<<<<<<< HEAD
   revision: 4b66333444fc49bb94ca4459dabbbda355c00473
   branch: stable/7
   specs:
     openproject-avatars (7.4.7)
+=======
+  revision: 54a32c59aa885416c4ebb6a83b066155c774aaae
+  branch: stable/7
+  specs:
+    openproject-avatars (7.4.6)
+>>>>>>> 7e747089b30acb96bce97fdd9b2f981ca076063a
       fastimage (~> 2.1.0)
       gravatar_image_tag (~> 1.2.0)
       rails (~> 5.0)
@@ -120,6 +127,7 @@ GIT
       rails (>= 5.0.0, < 5.1)
 
 GIT
+<<<<<<< HEAD
   remote: https://github.com/qqqqwerty/openproject-costs.git
   revision: 9a6e05488f9c18029c2ce03ad3d4860d32ea03a2
   branch: stable/7
@@ -149,6 +157,12 @@ GIT
   revision: 087d8d5a9a9ca37c0aad27ca9b70855286fbc585
   branch: stable/7
   specs:
+=======
+  remote: https://github.com/qqqqwerty/openproject-reporting.git
+  revision: 087d8d5a9a9ca37c0aad27ca9b70855286fbc585
+  branch: stable/7
+  specs:
+>>>>>>> 7e747089b30acb96bce97fdd9b2f981ca076063a
     openproject-reporting (7.4.3)
       jquery-tablesorter (~> 1.22.3)
       openproject-costs (= 7.4.3)
@@ -173,6 +187,28 @@ GIT
       activesupport (>= 3.0)
       rspec-mocks (>= 2.99, < 4.0)
 
+<<<<<<< HEAD
+=======
+PATH
+  remote: vendored-plugins/openproject-costs
+  specs:
+    openproject-costs (7.4.3)
+      rails (~> 5.0.0)
+
+PATH
+  remote: vendored-plugins/openproject-documents
+  specs:
+    openproject-documents (7.4.3)
+      rails (~> 5.0.0)
+
+PATH
+  remote: vendored-plugins/openproject-meeting
+  specs:
+    openproject-meeting (7.4.3)
+      icalendar (~> 2.3.0)
+      rails (~> 5.0.0)
+
+>>>>>>> 7e747089b30acb96bce97fdd9b2f981ca076063a
 GEM
   remote: https://rubygems.org/
   specs:
@@ -374,10 +410,17 @@ GEM
     faker (1.9.1)
       i18n (>= 0.7)
     fastimage (2.1.3)
+<<<<<<< HEAD
     ffi (1.9.25)
     fog-aws (3.0.0)
       fog-core (~> 2.1)
       fog-json (~> 1.1)
+=======
+    ffi (1.9.23)
+    fog-aws (2.0.1)
+      fog-core (~> 1.38)
+      fog-json (~> 1.0)
+>>>>>>> 7e747089b30acb96bce97fdd9b2f981ca076063a
       fog-xml (~> 0.1)
       ipaddress (~> 0.8)
     fog-core (2.1.2)
@@ -595,7 +638,11 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+<<<<<<< HEAD
     retriable (3.1.2)
+=======
+    retriable (3.1.1)
+>>>>>>> 7e747089b30acb96bce97fdd9b2f981ca076063a
     roar (1.1.0)
       representable (~> 3.0.0)
     rspec (3.5.0)

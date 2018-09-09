@@ -34,6 +34,8 @@ OpenProject::Static::Homescreen.manage :blocks do |blocks|
   blocks.push(
     { partial: 'welcome',
       if: Proc.new { Setting.welcome_on_homescreen? && Setting.welcome_text.present? } },
+    { partial: 'login_welcome',
+      if: Proc.new { Setting.login_welcome_on_homescreen? && User.current.logged? } },
     { partial: 'projects' },
     { partial: 'users',
       if: Proc.new { User.current.admin? } },
