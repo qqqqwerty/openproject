@@ -34,11 +34,7 @@ module WorkPackage::Validations
   MATERIAL_ORDER_TYPE_ID = 10
 
   included do
-<<<<<<< HEAD
     validates_presence_of :subject, :priority, :project, :type, :author, :status#, :assigned_to
-=======
-    validates_presence_of :subject, :priority, :project, :type, :author, :status, :assigned_to
->>>>>>> 7e747089b30acb96bce97fdd9b2f981ca076063a
 
     validates_length_of :subject, maximum: 255
     validates_inclusion_of :done_ratio, in: 0..100
