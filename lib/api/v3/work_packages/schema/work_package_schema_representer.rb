@@ -184,6 +184,10 @@ module API
 
           schema_with_allowed_link :assignee,
                                    type: 'User',
+<<<<<<< HEAD
+                                   required: true,
+=======
+>>>>>>> 7e747089b30acb96bce97fdd9b2f981ca076063a
                                    href_callback: ->(*) {
                                      if represented.project
                                        api_v3_paths.available_assignees(represented.project_id)

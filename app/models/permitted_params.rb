@@ -104,6 +104,10 @@ class PermittedParams
   def group_membership
     params.permit(*self.class.permitted_attributes[:group_membership])
   end
+  
+  def project_membership
+    params.permit(*self.class.permitted_attributes[:project_membership])
+  end
 
   def update_work_package(args = {})
     # used to be called new_work_package with an alias to update_work_package
@@ -528,8 +532,14 @@ class PermittedParams
         membership: [
           :project_id,
           role_ids: []],
+        project_membership: [
+          :membership_id,
+          membership: [
+            :role_id,
+            project_ids: []]],
         group_membership: [
           :membership_id,
+          :is_new,
           membership: [
             :project_id,
             role_ids: []]],

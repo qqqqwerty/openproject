@@ -31,7 +31,8 @@ module GroupsHelper
   def group_settings_tabs
     [{ name: 'general', partial: 'groups/general', label: :label_general },
      { name: 'users', partial: 'groups/users', label: :label_user_plural },
-     { name: 'memberships', partial: 'groups/memberships', label: :label_project_plural }
+     { name: 'memberships', partial: 'groups/memberships', label: :label_project_plural },
+     { name: 'new_memberships', partial: 'groups/new_memberships', label: :label_new_project_plural }
     ]
   end
 end

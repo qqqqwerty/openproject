@@ -32,8 +32,8 @@ class GroupsController < ApplicationController
 
   before_action :require_admin
   before_action :find_group, only: [:destroy, :autocomplete_for_user,
-                                    :show, :create_memberships, :destroy_membership,
-                                    :edit_membership]
+                                    :show, :create_memberships, :create_new_memberships_with_single_role,
+                                    :destroy_membership, :edit_membership, :new_destroy_membership]
 
   # GET /groups
   # GET /groups.xml
@@ -148,10 +148,50 @@ class GroupsController < ApplicationController
 
     service = ::Members::EditMembershipService.new(@membership, save: true, current_user: current_user)
     service.call(attributes: membership_params[:membership])
+    if membership_params[:is_new] != nil && membership_params[:is_new].to_i > 0
+      respond_to do |format|
+        format.html do redirect_to controller: '/groups', action: 'edit', id: @group, tab: 'new_memberships' end
+        format.js   do render action: 'new_change_memberships' end
+      end
+    else
+      respond_to do |format|
+        format.html do redirect_to controller: '/groups', action: 'edit', id: @group, tab: 'memberships' end
+        format.js   do render action: 'change_memberships' end
+      end
+    end
+  end
+  
+  def create_new_memberships_with_single_role
+    membership_params = permitted_params.project_membership
+    loc_role_id = membership_params[:membership][:role_id].to_i
+      
+    membership_params[:membership][:project_ids].each do |project_id|
+      membership_id = nil
+      membership_attributes = {:project_id => project_id, :role_ids => [loc_role_id]}
+           
+      project = Project.find(project_id)
+      project.memberships.each do |membership|
+        if membership.user_id == @group.id
+          membership.roles.each do |role|
+            if role.id != loc_role_id
+              membership_attributes[:role_ids].push(role.id)
+            end
+          end
+          membership_id = membership.id
+          break
+        end
+      end
+      
+      @membership = membership_id.present? ? Member.find(membership_id) : Member.new(principal: @group)
+
+      service = ::Members::EditMembershipService.new(@membership, save: true, current_user: current_user)
+      service.call(attributes: membership_attributes)
+    end
+    
 
     respond_to do |format|
-      format.html do redirect_to controller: '/groups', action: 'edit', id: @group, tab: 'memberships' end
-      format.js   do render action: 'change_memberships' end
+      format.html do redirect_to controller: '/groups', action: 'edit', id: @group, tab: 'new_memberships' end
+      format.js   do render action: 'new_change_memberships' end
     end
   end
 
@@ -163,6 +203,15 @@ class GroupsController < ApplicationController
     respond_to do |format|
       format.html do redirect_to controller: '/groups', action: 'edit', id: @group, tab: 'memberships' end
       format.js   do render action: 'destroy_memberships' end
+    end
+  end
+  
+  def new_destroy_membership
+    membership_params = permitted_params.group_membership
+    Member.find(membership_params[:membership_id]).destroy
+    respond_to do |format|
+      format.html do redirect_to controller: '/groups', action: 'edit', id: @group, tab: 'new_memberships' end
+      format.js   do render action: 'new_destroy_memberships' end
     end
   end
 

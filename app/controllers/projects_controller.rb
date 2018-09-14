@@ -293,7 +293,7 @@ class ProjectsController < ApplicationController
 
     hide_project_in_layout
   end
-
+  
   private
 
   def find_optional_project

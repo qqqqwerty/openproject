@@ -127,6 +127,11 @@ module UsersHelper
     options = project_tree_options_for_select(projects, disabled: user.projects.ids.to_set)
     content_tag('option', "--- #{l(:actionview_instancetag_blank_option)} ---") + options
   end
+  
+  def options_for_membership_role_select(user, role)
+    options = project_tree_options_for_select(role, disabled: user.role.ids.to_set)
+    content_tag('option', "--- #{l(:actionview_instancetag_blank_option)} ---") + options
+  end
 
   def user_mail_notification_options(user)
     user.valid_notification_options.map { |o| [l(o.last), o.first] }

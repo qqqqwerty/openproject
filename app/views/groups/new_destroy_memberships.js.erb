@@ -27,12 +27,12 @@ See doc/COPYRIGHT.rdoc for more details.
 
 ++#%>
 
-<% content = escape_javascript render(partial: 'memberships') %>
 <% new_content = escape_javascript render(partial: 'new_memberships') %>
+<% content = escape_javascript render(partial: 'memberships') %>
 <% flash_message = escape_javascript render(partial: "members/common_notice",
                                             locals: { message: l(:notice_successful_delete) }) %>
-var compiledContent = OpenProject.Helpers.Angular.compile('<%= content %>');
 var new_compiledContent = OpenProject.Helpers.Angular.compile('<%= new_content %>');
-jQuery('#tab-content-memberships').html(compiledContent);
+var compiledContent = OpenProject.Helpers.Angular.compile('<%= content %>');
 jQuery('#tab-content-new_memberships').html(new_compiledContent);
-jQuery('#tab-content-memberships').prepend('<%= flash_message %>');
+jQuery('#tab-content-memberships').html(compiledContent);
+jQuery('#tab-content-new_memberships').prepend('<%= flash_message %>');
